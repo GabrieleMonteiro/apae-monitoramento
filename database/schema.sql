@@ -35,7 +35,8 @@ CREATE TABLE tb02_leitura (
     tb02_temperatura DECIMAL(5,2) NOT NULL,
     tb02_nivel_som DECIMAL(5,2) NOT NULL,
     tb02_data_hora DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    tb02_led_acionado BOOLEAN NOT NULL DEFAULT FALSE,
+    tb02_led_temperatura BOOLEAN NOT NULL DEFAULT FALSE,
+    tb02_led_som BOOLEAN NOT NULL DEFAULT FALSE,
     tb02_descricao VARCHAR(255),
     tb02_id_arduino INT NOT NULL,
     FOREIGN KEY (tb02_id_arduino) REFERENCES tb01_arduino(tb01_id)
