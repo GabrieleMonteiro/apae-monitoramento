@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 
 const arduinoRoutes = require('./routes/arduinoRoutes');
+const leituraRoutes = require('./routes/leituraRoutes');
 
 const app = express();
 
@@ -16,6 +17,9 @@ app.get('/', (req, res) => {
 
 // Rotas do arduino
 app.use('/arduinos', arduinoRoutes);
+
+// Rotas das leituras (temperatura/som)
+app.use('/leituras', leituraRoutes);
 
 const PORT = process.env.PORT || 3000;
 
