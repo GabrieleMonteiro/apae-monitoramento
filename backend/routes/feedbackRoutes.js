@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-// GET /feedbacks
 router.get('/', async (req, res) => {
   try {
     const [linhas] = await db.query(`
@@ -22,7 +21,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// POST /feedbacks
 router.post('/', async (req, res) => {
   const { tb03_comentario, tb03_causa, tb03_id_professor, tb03_id_leitura } = req.body;
   if (!tb03_id_professor || !tb03_id_leitura) {
@@ -33,19 +31,13 @@ router.post('/', async (req, res) => {
       'INSERT INTO tb03_feedback (tb03_comentario, tb03_causa, tb03_hora, tb03_data, tb03_id_professor, tb03_id_leitura) VALUES (?, ?, CURTIME(), CURDATE(), ?, ?)',
       [tb03_comentario || '', tb03_causa || '', tb03_id_professor, tb03_id_leitura]
     );
-    res.status(201).json({
-      tb03_id_feedback: resultado.insertId,
-      tb03_comentario: tb03_comentario || '',
-      tb03_causa: tb03_causa || '',
-      tb03_id_professor, tb03_id_leitura
-    });
+    res.status(201).json({ tb03_id_feedback: resultado.insertId, tb03_comentario: tb03_comentario || '', tb03_causa: tb03_causa || '', tb03_id_professor, tb03_id_leitura });
   } catch (erro) {
     console.error(erro);
     res.status(500).json({ erro: 'Erro ao cadastrar feedback' });
   }
 });
 
-// PUT /feedbacks/:id
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { tb03_comentario, tb03_causa } = req.body;
@@ -54,9 +46,7 @@ router.put('/:id', async (req, res) => {
       'UPDATE tb03_feedback SET tb03_comentario = ?, tb03_causa = ? WHERE tb03_id_feedback = ?',
       [tb03_comentario || '', tb03_causa || '', id]
     );
-    if (resultado.affectedRows === 0) {
-      return res.status(404).json({ erro: 'Feedback nao encontrado' });
-    }
+    if (resultado.affectedRows === 0) return res.status(404).json({ erro: 'Feedback nao encontrado' });
     res.json({ mensagem: 'Feedback atualizado com sucesso' });
   } catch (erro) {
     console.error(erro);
