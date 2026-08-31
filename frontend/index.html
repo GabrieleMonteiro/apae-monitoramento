@@ -6,23 +6,18 @@
     <title>Painel Sensorial - APAE Monitoramento</title>
     <style>
         :root {
-            --bg-main: #0d1117;
-            --bg-card: #161b22;
-            --bg-sidebar: #010409;
-            --text-main: #c9d1d9;
-            --text-bright: #ffffff;
-            --accent-green: #2ea043;
-            --accent-red: #f85149;
-            --accent-yellow: #d29922;
+            --bg-main: #0d1117; --bg-card: #161b22; --bg-sidebar: #010409;
+            --text-main: #c9d1d9; --text-bright: #ffffff;
+            --accent-green: #2ea043; --accent-red: #f85149; --accent-yellow: #d29922;
             --border: #30363d;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-main); display: flex; min-height: 100vh; }
-        .sidebar { width: 260px; background-color: var(--bg-sidebar); border-right: 1px solid var(--border); padding: 24px; display: flex; flex-direction: column; position: fixed; height: 100vh; }
+        body { background-color: var(--bg-main); color: var(--text-main); display: flex; min-height: 100vh; transition: background-color 0.3s, color 0.3s; }
+        .sidebar { width: 260px; background-color: var(--bg-sidebar); border-right: 1px solid var(--border); padding: 24px; display: flex; flex-direction: column; position: fixed; height: 100vh; transition: background-color 0.3s; }
         .logo { color: var(--accent-green); font-weight: bold; font-size: 20px; margin-bottom: 40px; display: flex; align-items: center; gap: 10px; }
         .nav-item { padding: 12px; border-radius: 6px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 12px; color: #8b949e; text-decoration: none; }
         .nav-item:hover, .nav-item.active { background: #21262d; color: var(--text-bright); }
-        .status-badge { margin-top: auto; padding: 15px; background: #161b22; border-radius: 8px; font-size: 12px; border: 1px solid var(--border); }
+        .status-badge { margin-top: auto; padding: 15px; background: var(--bg-card); border-radius: 8px; font-size: 12px; border: 1px solid var(--border); }
         .dot { height: 8px; width: 8px; background: var(--accent-green); border-radius: 50%; display: inline-block; margin-right: 5px; }
         .main-content { margin-left: 260px; flex: 1; padding: 32px; }
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
@@ -30,27 +25,30 @@
         .header-title p { font-size: 14px; color: #8b949e; }
         .header-actions { display: flex; align-items: center; gap: 20px; }
         .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 32px; }
-        .card { background: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 12px; }
+        .card { background: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 12px; transition: background-color 0.3s; }
         .card-label { font-size: 12px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
         .card-value { font-size: 28px; font-weight: bold; color: var(--text-bright); }
         .card-trend { font-size: 12px; margin-top: 8px; }
         .trend-up { color: var(--accent-green); }
         .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 32px; }
-        .chart-container { height: 200px; width: 100%; position: relative; margin-top: 15px; }
+        .chart-container { height: 220px; width: 100%; position: relative; margin-top: 15px; }
         canvas { width: 100% !important; height: 100% !important; }
-        .table-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+        .table-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: background-color 0.3s; }
         .table-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; }
         th { text-align: left; padding: 12px; color: #8b949e; font-size: 12px; border-bottom: 1px solid var(--border); }
         td { padding: 16px 12px; border-bottom: 1px solid var(--border); font-size: 14px; }
         .badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
-        .badge-red { background: rgba(248, 81, 73, 0.1); color: var(--accent-red); }
-        .badge-yellow { background: rgba(210, 153, 34, 0.1); color: var(--accent-yellow); }
-        input[type="text"] { background: #0d1117; border: 1px solid var(--border); color: white; padding: 8px; border-radius: 4px; width: 100%; }
+        .badge-red { background: rgba(248,81,73,0.1); color: var(--accent-red); }
+        .badge-yellow { background: rgba(210,153,34,0.1); color: var(--accent-yellow); }
+        input[type="text"] { background: var(--bg-main); border: 1px solid var(--border); color: var(--text-bright); padding: 8px; border-radius: 4px; width: 100%; }
         .btn-save { background: var(--accent-green); color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
         .btn-save:hover { opacity: 0.8; }
+        .btn-edit { background: var(--accent-yellow); color: #000; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .btn-edit:hover { opacity: 0.8; }
         .sensor-list { margin-top: 20px; }
         .sensor-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
@@ -58,10 +56,10 @@
         <div class="logo"><span>▦</span> Painel Sensorial</div>
         <div style="margin-bottom: 20px; font-size: 14px; font-weight: bold;">Sala de Aula 04</div>
         <nav>
-            <a href="#" class="nav-item active"><span>◉</span> Visão geral</a>
-            <a href="#" class="nav-item"><span>♫</span> Ruído</a>
-            <a href="#" class="nav-item"><span>♨</span> Temperatura</a>
-            <a href="#" class="nav-item"><span>!</span> Ocorrências</a>
+            <a href="#" class="nav-item active" onclick="filtrarView('geral')"><span>◉</span> Visão geral</a>
+            <a href="#" class="nav-item" onclick="filtrarView('ruido')"><span>♫</span> Ruído</a>
+            <a href="#" class="nav-item" onclick="filtrarView('temperatura')"><span>♨</span> Temperatura</a>
+            <a href="#" class="nav-item" onclick="filtrarView('ocorrencias')"><span>!</span> Ocorrências</a>
             <a href="#" class="nav-item"><span>⚙</span> Configurações</a>
         </nav>
         <div class="status-badge">
@@ -78,215 +76,323 @@
             <div class="header-actions">
                 <span style="font-size: 13px; color: var(--accent-green);">● Monitoramento ativo</span>
                 <div style="display: flex; align-items: center; gap: 8px; cursor: pointer;" onclick="toggleTema()">
-    <span style="font-size: 12px;" id="label-tema">Modo escuro</span>
-    <div id="toggle-tema" style="width: 34px; height: 18px; background: var(--accent-green); border-radius: 10px; position: relative; transition: 0.3s;">
-        <div id="circle-tema" style="width: 14px; height: 14px; background: white; border-radius: 50%; position: absolute; right: 2px; top: 2px; transition: 0.3s;"></div>
-    </div>
-</div>
+                    <span style="font-size: 12px;" id="label-tema">Modo escuro</span>
+                    <div id="toggle-tema" style="width: 34px; height: 18px; background: var(--accent-green); border-radius: 10px; position: relative; transition: 0.3s;">
+                        <div id="circle-tema" style="width: 14px; height: 14px; background: white; border-radius: 50%; position: absolute; right: 2px; top: 2px; transition: 0.3s;"></div>
+                    </div>
+                </div>
             </div>
         </header>
-        <div class="metrics-grid">
-            <div class="card">
+        <div class="metrics-grid" id="metrics-grid">
+            <div class="card" id="card-ruido">
                 <div class="card-label">Ruído Atual</div>
                 <div class="card-value" id="val-ruido">-- dB</div>
                 <div class="card-trend trend-up">↑ 4% nas últimas 2h</div>
             </div>
-            <div class="card">
+            <div class="card" id="card-temp">
                 <div class="card-label">Temperatura</div>
                 <div class="card-value" id="val-temp">-- °C</div>
                 <div class="card-trend" style="color: #8b949e;">Estável</div>
             </div>
-            <div class="card">
+            <div class="card" id="card-ocorr">
                 <div class="card-label">Ocorrências Hoje</div>
                 <div class="card-value" id="val-ocorr">0</div>
                 <div class="card-trend" style="color: var(--accent-red);">+2 desde ontem</div>
             </div>
-            <div class="card">
+            <div class="card" id="card-status">
                 <div class="card-label">Status da Sala</div>
                 <div class="card-value" id="val-status" style="color: var(--accent-green);">Normal</div>
                 <div class="card-trend" style="color: #8b949e;">Ambiente controlado</div>
             </div>
         </div>
-        <div class="charts-grid">
-            <div class="card">
+        <div class="charts-grid" id="charts-grid">
+            <div class="card" id="chart-card-ruido">
                 <div class="card-label">Nível de Ruído (dB)</div>
-                <div class="chart-container">
-                    <canvas id="chartRuido"></canvas>
-                </div>
+                <div class="chart-container"><canvas id="chartRuido"></canvas></div>
             </div>
-            <div class="card">
+            <div class="card" id="chart-card-temp">
                 <div class="card-label">Temperatura (°C)</div>
-                <div class="chart-container">
-                    <canvas id="chartTemp"></canvas>
-                </div>
+                <div class="chart-container"><canvas id="chartTemp"></canvas></div>
             </div>
         </div>
-        <div class="table-section">
+        <div class="table-section" id="table-section">
             <div class="table-header">
                 <h3 style="color: var(--text-bright);">Ocorrências Recentes</h3>
                 <a href="#" style="color: var(--accent-green); text-decoration: none; font-size: 13px;">Ver todos →</a>
             </div>
             <table>
-                <thead>
-                    <tr>
-                        <th>DATA/HORA</th>
-                        <th>TIPO</th>
-                        <th>NÍVEL</th>
-                        <th>O QUE OCASIONOU?</th>
-                        <th>AÇÃO DO PROFESSOR</th>
-                        <th>AÇÃO</th>
-                    </tr>
-                </thead>
+                <thead><tr>
+                    <th>DATA/HORA</th><th>TIPO</th><th>NÍVEL</th>
+                    <th>O QUE OCASIONOU?</th><th>AÇÃO DO PROFESSOR</th><th>AÇÃO</th>
+                </tr></thead>
                 <tbody id="table-body"></tbody>
             </table>
         </div>
-        <div class="card" style="margin-top: 32px;">
+        <div class="card" style="margin-top: 32px;" id="sensor-section">
             <div class="card-label">Status dos Sensores</div>
             <div class="sensor-list" id="sensor-list"></div>
         </div>
     </div>
     <script>
-        const API_URL = 'http://localhost:3000';
-        let historicoSom = [];
-        let historicoTemp = [];
+                var API_URL = 'http://localhost:3000';
+        var historicoSom = [];
+        var historicoTemp = [];
+        var modoEscuro = true;
+        var viewAtual = 'geral';
+        var leiturasGlobal = [];
+        var feedbacksGlobal = [];
 
+        function toggleTema() {
+            modoEscuro = !modoEscuro;
+            var root = document.documentElement;
+            var toggle = document.getElementById('toggle-tema');
+            var circle = document.getElementById('circle-tema');
+            var label = document.getElementById('label-tema');
+            if (modoEscuro) {
+                root.style.setProperty('--bg-main', '#0d1117');
+                root.style.setProperty('--bg-card', '#161b22');
+                root.style.setProperty('--bg-sidebar', '#010409');
+                root.style.setProperty('--text-main', '#c9d1d9');
+                root.style.setProperty('--text-bright', '#ffffff');
+                root.style.setProperty('--border', '#30363d');
+                toggle.style.background = '#2ea043';
+                circle.style.right = '2px'; circle.style.left = 'auto';
+                label.innerText = 'Modo escuro';
+            } else {
+                root.style.setProperty('--bg-main', '#f6f8fa');
+                root.style.setProperty('--bg-card', '#ffffff');
+                root.style.setProperty('--bg-sidebar', '#e1e4e8');
+                root.style.setProperty('--text-main', '#24292e');
+                root.style.setProperty('--text-bright', '#000000');
+                root.style.setProperty('--border', '#d0d7de');
+                toggle.style.background = '#ccc';
+                circle.style.right = 'auto'; circle.style.left = '2px';
+                label.innerText = 'Modo claro';
+            }
+            if (historicoSom.length > 0) {
+                drawChart('chartRuido', historicoSom, '#2ea043', 100, 'dB');
+                drawChart('chartTemp', historicoTemp, '#d29922', 50, '°C');
+            }
+        }
 
-let modoEscuro = true;
+        function filtrarView(tipo) {
+            viewAtual = tipo;
+            document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+            event.currentTarget.classList.add('active');
 
-function toggleTema() {
-    modoEscuro = !modoEscuro;
-    const root = document.documentElement;
-    const toggle = document.getElementById('toggle-tema');
-    const circle = document.getElementById('circle-tema');
-    const label = document.getElementById('label-tema');
+            if (tipo === 'ocorrencias') {
+                document.getElementById('table-section').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
 
-    if (modoEscuro) {
-        root.style.setProperty('--bg-main', '#0d1117');
-        root.style.setProperty('--bg-card', '#161b22');
-        root.style.setProperty('--bg-sidebar', '#010409');
-        root.style.setProperty('--text-main', '#c9d1d9');
-        root.style.setProperty('--text-bright', '#ffffff');
-        root.style.setProperty('--border', '#30363d');
-        toggle.style.background = 'var(--accent-green)';
-        circle.style.right = '2px';
-        label.innerText = 'Modo escuro';
-    } else {
-        root.style.setProperty('--bg-main', '#f6f8fa');
-        root.style.setProperty('--bg-card', '#ffffff');
-        root.style.setProperty('--bg-sidebar', '#e1e4e8');
-        root.style.setProperty('--text-main', '#24292e');
-        root.style.setProperty('--text-bright', '#000000');
-        root.style.setProperty('--border', '#d0d7de');
-        toggle.style.background = '#ccc';
-        circle.style.right = '18px';
-        label.innerText = 'Modo claro';
-    }
-}
+            var cardRuido = document.getElementById('card-ruido');
+            var cardTemp = document.getElementById('card-temp');
+            var cardOcorr = document.getElementById('card-ocorr');
+            var cardStatus = document.getElementById('card-status');
+            var chartRuido = document.getElementById('chart-card-ruido');
+            var chartTemp = document.getElementById('chart-card-temp');
+            var tableSec = document.getElementById('table-section');
+            var sensorSec = document.getElementById('sensor-section');
 
-
-
+            if (tipo === 'geral') {
+                [cardRuido, cardTemp, cardOcorr, cardStatus, chartRuido, chartTemp, tableSec, sensorSec].forEach(function(el) { el.classList.remove('hidden'); });
+            } else if (tipo === 'ruido') {
+                [cardRuido, chartRuido, tableSec].forEach(function(el) { el.classList.remove('hidden'); });
+                [cardTemp, cardStatus, chartTemp, sensorSec].forEach(function(el) { el.classList.add('hidden'); });
+            } else if (tipo === 'temperatura') {
+                [cardTemp, chartTemp, tableSec].forEach(function(el) { el.classList.remove('hidden'); });
+                [cardRuido, cardOcorr, cardStatus, chartRuido, sensorSec].forEach(function(el) { el.classList.add('hidden'); });
+            }
+            if (historicoSom.length > 0) {
+                drawChart('chartRuido', historicoSom, '#2ea043', 100, 'dB');
+                drawChart('chartTemp', historicoTemp, '#d29922', 50, '°C');
+            }
+        }
 
         async function fetchData() {
             try {
-                const [resLeituras, resFeedbacks, resArduinos] = await Promise.all([
-                    fetch(API_URL + '/leituras'),
-                    fetch(API_URL + '/feedbacks'),
-                    fetch(API_URL + '/arduinos')
-                ]);
-                const leituras = await resLeituras.json();
-                const feedbacks = await resFeedbacks.json();
-                const arduinos = await resArduinos.json();
-                updateDashboard(leituras, feedbacks, arduinos);
+                var resLeituras = await fetch(API_URL + '/leituras');
+                var resFeedbacks = await fetch(API_URL + '/feedbacks');
+                var resArduinos = await fetch(API_URL + '/arduinos');
+                leiturasGlobal = await resLeituras.json();
+                feedbacksGlobal = await resFeedbacks.json();
+                var arduinos = await resArduinos.json();
+                updateDashboard(leiturasGlobal, feedbacksGlobal, arduinos);
                 document.getElementById('last-update').innerText = 'Última atualização: ' + new Date().toLocaleTimeString();
             } catch (error) {
-                console.error("Erro ao buscar dados:", error);
+                console.error('Erro ao buscar dados:', error);
             }
         }
 
-        function updateDashboard(leituras, feedbacks, arduinos) {
-            if (leituras.length === 0) return;
-            const ultima = leituras[leituras.length - 1];
-            document.getElementById('val-ruido').innerText = ultima.tb02_nivel_som + ' dB';
-            document.getElementById('val-temp').innerText = ultima.tb02_temperatura + ' °C';
-            const ocorrenciasHoje = leituras.filter(l => l.tb02_led_temperatura || l.tb02_led_som).length;
-            document.getElementById('val-ocorr').innerText = ocorrenciasHoje;
-            const statusSala = (ultima.tb02_led_temperatura || ultima.tb02_led_som) ? "Atenção" : "Normal";
-            const statusEl = document.getElementById('val-status');
-            statusEl.innerText = statusSala;
-            statusEl.style.color = statusSala === "Normal" ? "var(--accent-green)" : "var(--accent-red)";
-            historicoSom = leituras.slice(-10).map(l => l.tb02_nivel_som);
-            historicoTemp = leituras.slice(-10).map(l => l.tb02_temperatura);
-            drawChart('chartRuido', historicoSom, '#2ea043', 100);
-            drawChart('chartTemp', historicoTemp, '#d29922', 50);
-            const tableBody = document.getElementById('table-body');
-            tableBody.innerHTML = '';
-            const alertas = leituras.filter(l => l.tb02_led_temperatura || l.tb02_led_som).reverse();
-            alertas.forEach(alerta => {
-                const feedback = feedbacks.find(f => f.tb03_id_leitura === alerta.tb02_id_leitura);
-                const row = document.createElement('tr');
-                const tipo = alerta.tb02_led_temperatura ? 'TEMP.' : 'SOM';
-                const nivel = alerta.tb02_led_temperatura ? alerta.tb02_temperatura + '°C' : alerta.tb02_nivel_som + 'dB';
-                const dataHora = new Date(alerta.tb02_data_hora).toLocaleString();
-                row.innerHTML = '<td>' + dataHora + '</td>' +
-                    '<td><span class="badge ' + (alerta.tb02_led_temperatura ? 'badge-yellow' : 'badge-red') + '">' + tipo + '</span></td>' +
-                    '<td>' + nivel + '</td>' +
-                    '<td>Sensor detectou alteração</td>' +
-                    '<td>' + (feedback ? feedback.tb03_comentario : '<input type="text" placeholder="Descreva o motivo..." id="input-' + alerta.tb02_id_leitura + '">') + '</td>' +
-                    '<td>' + (feedback ? '<span style="color:var(--accent-green)">✓ Salvo</span>' : '<button class="btn-save" onclick="salvarFeedback(' + alerta.tb02_id_leitura + ')">Salvar</button>') + '</td>';
-                tableBody.appendChild(row);
-            });
-            const sensorList = document.getElementById('sensor-list');
-            sensorList.innerHTML = '';
-            arduinos.forEach(a => {
-                sensorList.innerHTML += '<div class="sensor-item"><span>● Arduino ' + a.tb01_id + ' - ' + a.tb01_sala + '</span><span style="color: #8b949e;">Atualizado agora</span><span style="color: var(--accent-green);">Ativo</span></div>';
-            });
+       function updateDashboard(leituras, feedbacks, arduinos) {
+    if (leituras.length === 0) return;
+    var ultima = leituras[leituras.length - 1];
+    document.getElementById('val-ruido').innerText = ultima.tb02_nivel_som + ' dB';
+    document.getElementById('val-temp').innerText = ultima.tb02_temperatura + ' °C';
+    var hoje = new Date().toISOString().split('T')[0];
+    var ocorrenciasHoje = leituras.filter(function(l) {
+        var dataLeitura = new Date(l.tb02_data_hora).toISOString().split('T')[0];
+        return dataLeitura === hoje && (l.tb02_led_temperatura || l.tb02_led_som);
+    }).length;
+    document.getElementById('val-ocorr').innerText = ocorrenciasHoje;
+    var statusSala = (ultima.tb02_led_temperatura || ultima.tb02_led_som) ? 'Atenção' : 'Normal';
+    var statusEl = document.getElementById('val-status');
+    statusEl.innerText = statusSala;
+    statusEl.style.color = statusSala === 'Normal' ? '#2ea043' : '#f85149';
+    historicoSom = leituras.slice(-10).map(function(l) { return l.tb02_nivel_som; });
+    historicoTemp = leituras.slice(-10).map(function(l) { return l.tb02_temperatura; });
+    drawChart('chartRuido', historicoSom, '#2ea043', 100, 'dB');
+    drawChart('chartTemp', historicoTemp, '#d29922', 50, '°C');
+
+    // TRAVA: se alguem esta digitando, nao reescreve a tabela
+    var inputsAtivos = document.querySelectorAll('#table-body input[type="text"]');
+    for (var i = 0; i < inputsAtivos.length; i++) {
+        if (document.activeElement === inputsAtivos[i]) return;
+    }
+
+    var tableBody = document.getElementById('table-body');
+    tableBody.innerHTML = '';
+    var alertas = leituras.filter(function(l) { return l.tb02_led_temperatura || l.tb02_led_som; }).reverse();
+    alertas.forEach(function(alerta) {
+        var feedback = feedbacks.find(function(f) { return f.tb03_id_leitura === alerta.tb02_id_leitura; });
+        var row = document.createElement('tr');
+        var tipo = alerta.tb02_led_temperatura ? 'TEMP.' : 'SOM';
+        var nivel = alerta.tb02_led_temperatura ? alerta.tb02_temperatura + '°C' : alerta.tb02_nivel_som + 'dB';
+        var dataHora = new Date(alerta.tb02_data_hora).toLocaleString();
+        if (viewAtual === 'ruido' && !alerta.tb02_led_som) return;
+        if (viewAtual === 'temperatura' && !alerta.tb02_led_temperatura) return;
+
+        var colCausa = '';
+        var colAcao = '';
+        if (feedback) {
+            colCausa = '<span id="causa-' + alerta.tb02_id_leitura + '">' + (feedback.tb03_causa || '') + '</span>';
+            colAcao = '<span id="acao-' + alerta.tb02_id_leitura + '">' + (feedback.tb03_comentario || '') + '</span>';
+            colAcao += ' <button class="btn-edit" onclick="editarFeedback(' + alerta.tb02_id_leitura + ', ' + feedback.tb03_id_feedback + ')">Editar</button>';
+        } else {
+            colCausa = '<input type="text" placeholder="O que ocasionou?" id="input-causa-' + alerta.tb02_id_leitura + '">';
+            colAcao = '<input type="text" placeholder="Ação do professor" id="input-acao-' + alerta.tb02_id_leitura + '">';
+            colAcao += ' <button class="btn-save" onclick="salvarFeedback(' + alerta.tb02_id_leitura + ')">Salvar</button>';
         }
+        row.innerHTML = '<td>' + dataHora + '</td>' +
+            '<td><span class="badge ' + (alerta.tb02_led_temperatura ? 'badge-yellow' : 'badge-red') + '">' + tipo + '</span></td>' +
+            '<td>' + nivel + '</td>' +
+            '<td>' + colCausa + '</td>' +
+            '<td>' + colAcao + '</td>' +
+            '<td></td>';
+        tableBody.appendChild(row);
+    });
+    var sensorList = document.getElementById('sensor-list');
+    sensorList.innerHTML = '';
+    arduinos.forEach(function(a) {
+        sensorList.innerHTML += '<div class="sensor-item"><span>● Arduino ' + a.tb01_id + ' - ' + a.tb01_sala + '</span><span style="color:#8b949e;">Atualizado agora</span><span style="color:#2ea043;">Ativo</span></div>';
+    });
+}
 
         async function salvarFeedback(idLeitura) {
-            const comentario = document.getElementById('input-' + idLeitura).value;
-            if (!comentario) return alert("Digite um comentário");
+    var causa = document.getElementById('input-causa-' + idLeitura).value;
+    var acao = document.getElementById('input-acao-' + idLeitura).value;
+    if (!causa && !acao) { alert('Preencha pelo menos um campo'); return; }
+    try {
+        await fetch(API_URL + '/feedbacks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                tb03_causa: causa, tb03_comentario: acao,
+                tb03_id_professor: 1, tb03_id_leitura: idLeitura
+            })
+        });
+        fetchData();
+    } catch (error) { alert('Erro ao salvar feedback'); }
+}
+
+function editarFeedback(idLeitura, idFeedback) {
+    var spanCausa = document.getElementById('causa-' + idLeitura);
+    var spanAcao = document.getElementById('acao-' + idLeitura);
+    var textoCausa = spanCausa.innerText;
+    var textoAcao = spanAcao.innerText.replace('Editar', '').trim();
+    spanCausa.innerHTML = '<input type="text" value="' + textoCausa + '" id="edit-causa-' + idLeitura + '" style="width:90%;">';
+    spanAcao.innerHTML = '<input type="text" value="' + textoAcao + '" id="edit-acao-' + idLeitura + '" style="width:70%;"> <button class="btn-save" onclick="atualizarFeedback(' + idLeitura + ', ' + idFeedback + ')">Salvar</button>';
+}
+
+async function atualizarFeedback(idLeitura, idFeedback) {
+    var causa = document.getElementById('edit-causa-' + idLeitura).value;
+    var acao = document.getElementById('edit-acao-' + idLeitura).value;
+    try {
+        await fetch(API_URL + '/feedbacks/' + idFeedback, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ tb03_causa: causa, tb03_comentario: acao })
+        });
+        fetchData();
+    } catch (error) { alert('Erro ao atualizar feedback'); }
+}
+
+        async function atualizarFeedback(idLeitura, idFeedback) {
+            var novoTexto = document.getElementById('edit-input-' + idLeitura).value;
+            if (!novoTexto) { alert('Digite um comentário'); return; }
             try {
-                await fetch(API_URL + '/feedbacks', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        tb03_comentario: comentario,
-                        tb03_id_professor: 1,
-                        tb03_id_leitura: idLeitura
-                    })
+                await fetch(API_URL + '/feedbacks/' + idFeedback, {
+                    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tb03_comentario: novoTexto })
                 });
                 fetchData();
-            } catch (error) {
-                alert("Erro ao salvar feedback");
-            }
+            } catch (error) { alert('Erro ao atualizar feedback'); }
         }
 
-        function drawChart(canvasId, data, color, maxVal) {
-            const canvas = document.getElementById(canvasId);
-            const ctx = canvas.getContext('2d');
-            const width = canvas.offsetWidth;
-            const height = canvas.offsetHeight;
+        function drawChart(canvasId, data, color, maxVal, unidade) {
+            var canvas = document.getElementById(canvasId);
+            var ctx = canvas.getContext('2d');
+            var width = canvas.offsetWidth;
+            var height = canvas.offsetHeight;
             canvas.width = width;
             canvas.height = height;
             ctx.clearRect(0, 0, width, height);
+            // GRID e EIXO Y
+            ctx.strokeStyle = modoEscuro ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
+            ctx.lineWidth = 1;
+            ctx.font = '10px Inter, sans-serif';
+            ctx.fillStyle = modoEscuro ? '#8b949e' : '#6a737d';
+            var linhas = 5;
+            for (var i = 0; i <= linhas; i++) {
+                var y = (height / linhas) * i;
+                ctx.beginPath();
+                ctx.moveTo(35, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+                var valLabel = Math.round(maxVal - (maxVal / linhas) * i);
+                ctx.fillText(valLabel + unidade, 2, y + 3);
+            }
+            if (data.length < 1) return;
+            // LINHA DO GRAFICO
             ctx.beginPath();
             ctx.strokeStyle = color;
             ctx.lineWidth = 2;
-            const step = width / (data.length - 1);
-            data.forEach((val, i) => {
-                const x = i * step;
-                const y = height - (val / maxVal * height);
+            var step = data.length > 1 ? (width - 35) / (data.length - 1) : 0;
+            data.forEach(function(val, i) {
+                var x = 35 + (i * step);
+                var y = height - (val / maxVal * (height - 10)) - 5;
                 if (i === 0) ctx.moveTo(x, y);
                 else ctx.lineTo(x, y);
             });
             ctx.stroke();
-            ctx.lineTo(width, height);
-            ctx.lineTo(0, height);
-            const grad = ctx.createLinearGradient(0, 0, 0, height);
-            grad.addColorStop(0, color + '33');
+            // AREA PREENCHIDA
+            ctx.lineTo(35 + ((data.length - 1) * step), height);
+            ctx.lineTo(35, height);
+            ctx.closePath();
+            var grad = ctx.createLinearGradient(0, 0, 0, height);
+            grad.addColorStop(0, color + '44');
             grad.addColorStop(1, 'transparent');
             ctx.fillStyle = grad;
             ctx.fill();
+            // PONTOS
+            ctx.fillStyle = color;
+            data.forEach(function(val, i) {
+                var x = 35 + (i * step);
+                var y = height - (val / maxVal * (height - 10)) - 5;
+                ctx.beginPath();
+                ctx.arc(x, y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
         }
 
         fetchData();
