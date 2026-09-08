@@ -231,7 +231,7 @@
     document.getElementById('val-temp').innerText = ultima.tb02_temperatura + ' °C';
     var hoje = new Date().toISOString().split('T')[0];
     var ocorrenciasHoje = leituras.filter(function(l) {
-        var dataLeitura = new Date(l.tb02_data_hora).toISOString().split('T')[0];
+var dataLeitura = l.tb02_data;
         return dataLeitura === hoje && (l.tb02_led_temperatura || l.tb02_led_som);
     }).length;
     document.getElementById('val-ocorr').innerText = ocorrenciasHoje;
@@ -258,7 +258,7 @@
         var row = document.createElement('tr');
         var tipo = alerta.tb02_led_temperatura ? 'TEMP.' : 'SOM';
         var nivel = alerta.tb02_led_temperatura ? alerta.tb02_temperatura + '°C' : alerta.tb02_nivel_som + 'dB';
-        var dataHora = new Date(alerta.tb02_data_hora).toLocaleString();
+var dataHora = alerta.tb02_data + ' ' + alerta.tb02_hora;
         if (viewAtual === 'ruido' && !alerta.tb02_led_som) return;
         if (viewAtual === 'temperatura' && !alerta.tb02_led_temperatura) return;
 
@@ -284,7 +284,7 @@
     var sensorList = document.getElementById('sensor-list');
     sensorList.innerHTML = '';
     arduinos.forEach(function(a) {
-        sensorList.innerHTML += '<div class="sensor-item"><span>● Arduino ' + a.tb01_id + ' - ' + a.tb01_sala + '</span><span style="color:#8b949e;">Atualizado agora</span><span style="color:#2ea043;">Ativo</span></div>';
+        sensorList.innerHTML += '<div class="sensor-item"><span>● Arduino ' + a.tb01_id_arduino + ' - ' + a.tb01_localizacao + '</span><span style="color:#8b949e;">Atualizado agora</span><span style="color:#2ea043;">Ativo</span></div>';
     });
 }
 

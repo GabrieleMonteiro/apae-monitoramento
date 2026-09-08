@@ -10,7 +10,7 @@ const LIMITE_SOM = 80; // dB
 router.get('/', async (req, res) => {
     try {
         const [linhas] = await db.query(
-            'SELECT * FROM tb02_leitura ORDER BY tb02_data_hora DESC'
+            'SELECT * FROM tb02_leitura ORDER BY tb02_data DESC, tb02_hora DESC'
         );
         res.json(linhas);
     } catch (erro) {
@@ -57,8 +57,8 @@ router.post('/', async (req, res) => {
     try {
         const [resultado] = await db.query(
             `INSERT INTO tb02_leitura
-                (tb02_temperatura, tb02_nivel_som, tb02_led_temperatura, tb02_led_som, tb02_id_arduino)
-             VALUES (?, ?, ?, ?, ?)`,
+                (tb02_temperatura, tb02_nivel_som, tb02_led_temperatura, tb02_led_som, tb02_data, tb02_hora, tb02_id_arduino)
+             VALUES (?, ?, ?, ?, CURDATE(), CURTIME(), ?)`,
             [tb02_temperatura, tb02_nivel_som, ledTemperatura, ledSom, tb02_id_arduino]
         );
 
