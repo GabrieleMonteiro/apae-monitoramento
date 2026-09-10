@@ -327,18 +327,7 @@ async function atualizarFeedback(idLeitura, idFeedback) {
     } catch (error) { alert('Erro ao atualizar feedback'); }
 }
 
-        async function atualizarFeedback(idLeitura, idFeedback) {
-            var novoTexto = document.getElementById('edit-input-' + idLeitura).value;
-            if (!novoTexto) { alert('Digite um comentário'); return; }
-            try {
-                await fetch(API_URL + '/feedbacks/' + idFeedback, {
-                    method: 'PUT', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ tb03_comentario: novoTexto })
-                });
-                fetchData();
-            } catch (error) { alert('Erro ao atualizar feedback'); }
-        }
-
+        
         function drawChart(canvasId, data, color, maxVal, unidade) {
             var canvas = document.getElementById(canvasId);
             var ctx = canvas.getContext('2d');
