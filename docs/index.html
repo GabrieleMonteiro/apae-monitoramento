@@ -102,7 +102,7 @@
             <div class="card" id="card-status">
                 <div class="card-label">Status da Sala</div>
                 <div class="card-value" id="val-status" style="color: var(--accent-green);">Normal</div>
-                <div class="card-trend" style="color: #8b949e;">Ambiente controlado</div>
+                <div class="card-trend" id="status-trend" style="color: #8b949e;">Ambiente controlado</div>
             </div>
         </div>
         <div class="charts-grid" id="charts-grid">
@@ -134,7 +134,7 @@
         </div>
     </div>
     <script>
-                var API_URL = 'https://apae-monitoramento.onrender.com';
+        var API_URL = 'https://apae-monitoramento.onrender.com';
         var historicoSom = [];
         var historicoTemp = [];
         var modoEscuro = true;
@@ -179,12 +179,10 @@
             viewAtual = tipo;
             document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
             event.currentTarget.classList.add('active');
-
             if (tipo === 'ocorrencias') {
                 document.getElementById('table-section').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
-
             var cardRuido = document.getElementById('card-ruido');
             var cardTemp = document.getElementById('card-temp');
             var cardOcorr = document.getElementById('card-ocorr');
@@ -193,7 +191,6 @@
             var chartTemp = document.getElementById('chart-card-temp');
             var tableSec = document.getElementById('table-section');
             var sensorSec = document.getElementById('sensor-section');
-
             if (tipo === 'geral') {
                 [cardRuido, cardTemp, cardOcorr, cardStatus, chartRuido, chartTemp, tableSec, sensorSec].forEach(function(el) { el.classList.remove('hidden'); });
             } else if (tipo === 'ruido') {
@@ -209,6 +206,52 @@
             }
         }
 
+        // === LÓGICA DE STATUS AUTOMÁTICO ===
+        // Verifica o registro mais recente no banco
+        // Se foi há menos de 10 minutos → "Atenção"
+        // Se foi há mais de 10 minutos → "Normal"
+        function atualizarStatus(leituras) {
+            var statusEl = document.getElementById('val-status');
+            var trendEl = document.getElementById('status-trend');
+
+            if (leituras.length === 0) {
+                statusEl.textContent = 'Normal';
+                statusEl.style.color = 'var(--accent-green)';
+                trendEl.textContent = 'Ambiente controlado';
+                trendEl.style.color = '#8b949e';
+                return;
+            }
+
+            // Pega o registro mais recente (já vem ordenado DESC)
+            var maisRecente = leituras[0];
+            var dataRegistro = maisRecente.tb02_data;
+            var horaRegistro = maisRecente.tb02_hora;
+
+            // Monta a data/hora do registro
+            var dataHoraRegistro = new Date(dataRegistro + 'T' + horaRegistro);
+
+            // Pega a data/hora atual
+            var agora = new Date();
+
+            // Calcula a diferença em minutos
+            var diffMs = agora - dataHoraRegistro;
+            var diffMinutos = Math.floor(diffMs / 60000);
+
+            if (diffMinutos < 10) {
+                // Menos de 10 minutos desde o último alerta → ATENÇÃO
+                statusEl.textContent = 'Atenção';
+                statusEl.style.color = 'var(--accent-red)';
+                trendEl.textContent = 'Ocorrência detectada há ' + diffMinutos + ' min';
+                trendEl.style.color = 'var(--accent-red)';
+            } else {
+                // Mais de 10 minutos sem alertas → NORMAL
+                statusEl.textContent = 'Normal';
+                statusEl.style.color = 'var(--accent-green)';
+                trendEl.textContent = 'Sem ocorrências há ' + diffMinutos + ' min';
+                trendEl.style.color = '#8b949e';
+            }
+        }
+
         async function fetchData() {
             try {
                 var resLeituras = await fetch(API_URL + '/leituras');
@@ -218,116 +261,135 @@
                 feedbacksGlobal = await resFeedbacks.json();
                 var arduinos = await resArduinos.json();
                 updateDashboard(leiturasGlobal, feedbacksGlobal, arduinos);
+
+                // Atualiza o status da sala baseado no último registro
+                atualizarStatus(leiturasGlobal);
+
                 document.getElementById('last-update').innerText = 'Última atualização: ' + new Date().toLocaleTimeString();
             } catch (error) {
                 console.error('Erro ao buscar dados:', error);
             }
         }
 
-       function updateDashboard(leituras, feedbacks, arduinos) {
-    if (leituras.length === 0) return;
-    var ultima = leituras[leituras.length - 1];
-    document.getElementById('val-ruido').innerText = ultima.tb02_nivel_som + ' dB';
-    document.getElementById('val-temp').innerText = ultima.tb02_temperatura + ' °C';
-    var hoje = new Date().toISOString().split('T')[0];
-    var ocorrenciasHoje = leituras.filter(function(l) {
-var dataLeitura = l.tb02_data;
-        return dataLeitura === hoje && (l.tb02_led_temperatura || l.tb02_led_som);
-    }).length;
-    document.getElementById('val-ocorr').innerText = ocorrenciasHoje;
-    var statusSala = (ultima.tb02_led_temperatura || ultima.tb02_led_som) ? 'Atenção' : 'Normal';
-    var statusEl = document.getElementById('val-status');
-    statusEl.innerText = statusSala;
-    statusEl.style.color = statusSala === 'Normal' ? '#2ea043' : '#f85149';
-    historicoSom = leituras.slice(-10).map(function(l) { return l.tb02_nivel_som; });
-    historicoTemp = leituras.slice(-10).map(function(l) { return l.tb02_temperatura; });
-    drawChart('chartRuido', historicoSom, '#2ea043', 100, 'dB');
-    drawChart('chartTemp', historicoTemp, '#d29922', 50, '°C');
+        function updateDashboard(leituras, feedbacks, arduinos) {
+            if (leituras.length === 0) return;
+            var ultima = leituras[leituras.length - 1];
+            document.getElementById('val-ruido').innerText = ultima.tb02_nivel_som + ' dB';
+            document.getElementById('val-temp').innerText = ultima.tb02_temperatura + ' °C';
+            var hoje = new Date().toISOString().split('T')[0];
+            var ocorrenciasHoje = leituras.filter(function(l) {
+                var dataLeitura = l.tb02_data;
+                return dataLeitura === hoje && (l.tb02_led_temperatura || l.tb02_led_som);
+            }).length;
+            document.getElementById('val-ocorr').innerText = ocorrenciasHoje;
+            historicoSom = leituras.slice(-10).map(function(l) { return l.tb02_nivel_som; });
+            historicoTemp = leituras.slice(-10).map(function(l) { return l.tb02_temperatura; });
+            drawChart('chartRuido', historicoSom, '#2ea043', 100, 'dB');
+            drawChart('chartTemp', historicoTemp, '#d29922', 50, '°C');
 
-    // TRAVA: se alguem esta digitando, nao reescreve a tabela
-    var inputsAtivos = document.querySelectorAll('#table-body input[type="text"]');
-    for (var i = 0; i < inputsAtivos.length; i++) {
-        if (document.activeElement === inputsAtivos[i]) return;
-    }
+            // TRAVA: se alguem esta digitando, nao reescreve a tabela
+            var inputsAtivos = document.querySelectorAll('#table-body input[type="text"]');
+            for (var i = 0; i < inputsAtivos.length; i++) {
+                if (document.activeElement === inputsAtivos[i]) return;
+            }
 
-    var tableBody = document.getElementById('table-body');
-    tableBody.innerHTML = '';
-    var alertas = leituras.filter(function(l) { return l.tb02_led_temperatura || l.tb02_led_som; }).reverse();
-    alertas.forEach(function(alerta) {
-        var feedback = feedbacks.find(function(f) { return f.tb03_id_leitura === alerta.tb02_id_leitura; });
-        var row = document.createElement('tr');
-        var tipo = alerta.tb02_led_temperatura ? 'TEMP.' : 'SOM';
-        var nivel = alerta.tb02_led_temperatura ? alerta.tb02_temperatura + '°C' : alerta.tb02_nivel_som + 'dB';
-var dataHora = alerta.tb02_data + ' ' + alerta.tb02_hora;
-        if (viewAtual === 'ruido' && !alerta.tb02_led_som) return;
-        if (viewAtual === 'temperatura' && !alerta.tb02_led_temperatura) return;
-
-        var colCausa = '';
-        var colAcao = '';
-        if (feedback) {
-            colCausa = '<span id="causa-' + alerta.tb02_id_leitura + '">' + (feedback.tb03_causa || '') + '</span>';
-            colAcao = '<span id="acao-' + alerta.tb02_id_leitura + '">' + (feedback.tb03_comentario || '') + '</span>';
-            colAcao += ' <button class="btn-edit" onclick="editarFeedback(' + alerta.tb02_id_leitura + ', ' + feedback.tb03_id_feedback + ')">Editar</button>';
-        } else {
-            colCausa = '<input type="text" placeholder="O que ocasionou?" id="input-causa-' + alerta.tb02_id_leitura + '">';
-            colAcao = '<input type="text" placeholder="Ação do professor" id="input-acao-' + alerta.tb02_id_leitura + '">';
-            colAcao += ' <button class="btn-save" onclick="salvarFeedback(' + alerta.tb02_id_leitura + ')">Salvar</button>';
+            var tableBody = document.getElementById('table-body');
+            tableBody.innerHTML = '';
+            var alertas = leituras.filter(function(l) { return l.tb02_led_temperatura || l.tb02_led_som; }).reverse();
+            alertas.forEach(function(alerta) {
+                var feedback = feedbacks.find(function(f) { return f.tb03_id_leitura === alerta.tb02_id_leitura; });
+                var row = document.createElement('tr');
+                var tipo = alerta.tb02_led_temperatura ? 'TEMP.' : 'SOM';
+                var nivel = alerta.tb02_led_temperatura ? alerta.tb02_temperatura + '°C' : alerta.tb02_nivel_som + 'dB';
+                var dataHora = alerta.tb02_data + ' ' + alerta.tb02_hora;
+                if (viewAtual === 'ruido' && !alerta.tb02_led_som) return;
+                if (viewAtual === 'temperatura' && !alerta.tb02_led_temperatura) return;
+                var colCausa = '';
+                var colAcao = '';
+                if (feedback) {
+                    colCausa = '<span id="causa-' + alerta.tb02_id_leitura + '">' + (feedback.tb03_causa || '') + '</span>';
+                    colAcao = '<span id="acao-' + alerta.tb02_id_leitura + '">' + (feedback.tb03_comentario || '') + '</span>';
+                    colAcao += ' <button class="btn-edit" onclick="editarFeedback(' + alerta.tb02_id_leitura + ', ' + feedback.tb03_id_feedback + ')">Editar</button>';
+                } else {
+                    colCausa = '<input type="text" placeholder="O que ocasionou?" id="input-causa-' + alerta.tb02_id_leitura + '">';
+                    colAcao = '<input type="text" placeholder="Ação do professor" id="input-acao-' + alerta.tb02_id_leitura + '">';
+                    colAcao += ' <button class="btn-save" onclick="salvarFeedback(' + alerta.tb02_id_leitura + ')">Salvar</button>';
+                }
+                row.innerHTML = '<td>' + dataHora + '</td>' +
+                    '<td><span class="badge ' + (alerta.tb02_led_temperatura ? 'badge-yellow' : 'badge-red') + '">' + tipo + '</span></td>' +
+                    '<td>' + nivel + '</td>' +
+                    '<td>' + colCausa + '</td>' +
+                    '<td>' + colAcao + '</td>' +
+                    '<td></td>';
+                tableBody.appendChild(row);
+            });
+            var sensorList = document.getElementById('sensor-list');
+            sensorList.innerHTML = '';
+            arduinos.forEach(function(a) {
+                sensorList.innerHTML += '<div class="sensor-item"><span>● Arduino ' + a.tb01_id_arduino + ' - ' + a.tb01_localizacao + '</span><span style="color:#8b949e;">Atualizado agora</span><span style="color:#2ea043;">Ativo</span></div>';
+            });
         }
-        row.innerHTML = '<td>' + dataHora + '</td>' +
-            '<td><span class="badge ' + (alerta.tb02_led_temperatura ? 'badge-yellow' : 'badge-red') + '">' + tipo + '</span></td>' +
-            '<td>' + nivel + '</td>' +
-            '<td>' + colCausa + '</td>' +
-            '<td>' + colAcao + '</td>' +
-            '<td></td>';
-        tableBody.appendChild(row);
-    });
-    var sensorList = document.getElementById('sensor-list');
-    sensorList.innerHTML = '';
-    arduinos.forEach(function(a) {
-        sensorList.innerHTML += '<div class="sensor-item"><span>● Arduino ' + a.tb01_id_arduino + ' - ' + a.tb01_localizacao + '</span><span style="color:#8b949e;">Atualizado agora</span><span style="color:#2ea043;">Ativo</span></div>';
-    });
-}
 
+        // === SALVAR FEEDBACK ===
+        // CORREÇÃO: verifica se já existe feedback antes de criar novo
+        // Se já existe → faz PUT (não muda a data)
+        // Se não existe → faz POST (cria novo com data de hoje)
         async function salvarFeedback(idLeitura) {
-    var causa = document.getElementById('input-causa-' + idLeitura).value;
-    var acao = document.getElementById('input-acao-' + idLeitura).value;
-    if (!causa && !acao) { alert('Preencha pelo menos um campo'); return; }
-    try {
-        await fetch(API_URL + '/feedbacks', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                tb03_causa: causa, tb03_comentario: acao,
-                tb03_id_professor: 1, tb03_id_leitura: idLeitura
-            })
-        });
-        fetchData();
-    } catch (error) { alert('Erro ao salvar feedback'); }
-}
+            var causa = document.getElementById('input-causa-' + idLeitura).value;
+            var acao = document.getElementById('input-acao-' + idLeitura).value;
+            if (!causa && !acao) { alert('Preencha pelo menos um campo'); return; }
 
-function editarFeedback(idLeitura, idFeedback) {
-    var spanCausa = document.getElementById('causa-' + idLeitura);
-    var spanAcao = document.getElementById('acao-' + idLeitura);
-    var textoCausa = spanCausa.innerText;
-    var textoAcao = spanAcao.innerText.replace('Editar', '').trim();
-    spanCausa.innerHTML = '<input type="text" value="' + textoCausa + '" id="edit-causa-' + idLeitura + '" style="width:90%;">';
-    spanAcao.innerHTML = '<input type="text" value="' + textoAcao + '" id="edit-acao-' + idLeitura + '" style="width:70%;"> <button class="btn-save" onclick="atualizarFeedback(' + idLeitura + ', ' + idFeedback + ')">Salvar</button>';
-}
+            // Verifica se já existe feedback para esta leitura
+            var existente = feedbacksGlobal.find(function(f) { return f.tb03_id_leitura === idLeitura; });
 
-async function atualizarFeedback(idLeitura, idFeedback) {
-    var causa = document.getElementById('edit-causa-' + idLeitura).value;
-    var acao = document.getElementById('edit-acao-' + idLeitura).value;
-    try {
-        await fetch(API_URL + '/feedbacks/' + idFeedback, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ tb03_causa: causa, tb03_comentario: acao })
-        });
-        fetchData();
-    } catch (error) { alert('Erro ao atualizar feedback'); }
-}
+            if (existente) {
+                // Já existe — faz PUT (não altera a data)
+                try {
+                    await fetch(API_URL + '/feedbacks/' + existente.tb03_id_feedback, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ tb03_causa: causa, tb03_comentario: acao })
+                    });
+                    fetchData();
+                } catch (error) { alert('Erro ao atualizar feedback'); }
+            } else {
+                // Não existe — faz POST
+                try {
+                    await fetch(API_URL + '/feedbacks', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            tb03_causa: causa, tb03_comentario: acao,
+                            tb03_id_professor: 1, tb03_id_leitura: idLeitura
+                        })
+                    });
+                    fetchData();
+                } catch (error) { alert('Erro ao salvar feedback'); }
+            }
+        }
 
-        
+        function editarFeedback(idLeitura, idFeedback) {
+            var spanCausa = document.getElementById('causa-' + idLeitura);
+            var spanAcao = document.getElementById('acao-' + idLeitura);
+            var textoCausa = spanCausa.innerText;
+            var textoAcao = spanAcao.innerText.replace('Editar', '').trim();
+            spanCausa.innerHTML = '<input type="text" value="' + textoCausa + '" id="edit-causa-' + idLeitura + '" style="width:90%;">';
+            spanAcao.innerHTML = '<input type="text" value="' + textoAcao + '" id="edit-acao-' + idLeitura + '" style="width:70%;"> <button class="btn-save" onclick="atualizarFeedback(' + idLeitura + ', ' + idFeedback + ')">Salvar</button>';
+        }
+
+        async function atualizarFeedback(idLeitura, idFeedback) {
+            var causa = document.getElementById('edit-causa-' + idLeitura).value;
+            var acao = document.getElementById('edit-acao-' + idLeitura).value;
+            try {
+                await fetch(API_URL + '/feedbacks/' + idFeedback, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tb03_causa: causa, tb03_comentario: acao })
+                });
+                fetchData();
+            } catch (error) { alert('Erro ao atualizar feedback'); }
+        }
+
         function drawChart(canvasId, data, color, maxVal, unidade) {
             var canvas = document.getElementById(canvasId);
             var ctx = canvas.getContext('2d');
@@ -336,7 +398,6 @@ async function atualizarFeedback(idLeitura, idFeedback) {
             canvas.width = width;
             canvas.height = height;
             ctx.clearRect(0, 0, width, height);
-            // GRID e EIXO Y
             ctx.strokeStyle = modoEscuro ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
             ctx.lineWidth = 1;
             ctx.font = '10px Inter, sans-serif';
@@ -352,7 +413,6 @@ async function atualizarFeedback(idLeitura, idFeedback) {
                 ctx.fillText(valLabel + unidade, 2, y + 3);
             }
             if (data.length < 1) return;
-            // LINHA DO GRAFICO
             ctx.beginPath();
             ctx.strokeStyle = color;
             ctx.lineWidth = 2;
@@ -364,7 +424,6 @@ async function atualizarFeedback(idLeitura, idFeedback) {
                 else ctx.lineTo(x, y);
             });
             ctx.stroke();
-            // AREA PREENCHIDA
             ctx.lineTo(35 + ((data.length - 1) * step), height);
             ctx.lineTo(35, height);
             ctx.closePath();
@@ -373,7 +432,6 @@ async function atualizarFeedback(idLeitura, idFeedback) {
             grad.addColorStop(1, 'transparent');
             ctx.fillStyle = grad;
             ctx.fill();
-            // PONTOS
             ctx.fillStyle = color;
             data.forEach(function(val, i) {
                 var x = 35 + (i * step);
@@ -385,7 +443,7 @@ async function atualizarFeedback(idLeitura, idFeedback) {
         }
 
         fetchData();
-        setInterval(fetchData, 10000);
+        setInterval(fetchData, 30000);
     </script>
 </body>
 </html>
