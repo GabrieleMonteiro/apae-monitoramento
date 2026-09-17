@@ -207,9 +207,19 @@
         }
 
         // === LÓGICA DE STATUS AUTOMÁTICO ===
+        // Extrai data/hora de qualquer formato que a API mandar:
+        // "2026-09-17T00:00:00.000Z", "2026-09-17" + "13:40:47", etc.
+        function extrairDataHora(leitura) {
+            var dataStr = String(leitura.tb02_data).split('T')[0];
+            var horaBruta = String(leitura.tb02_hora);
+            var horaStr = horaBruta.includes('T') ? horaBruta.split('T')[1] : horaBruta;
+            horaStr = horaStr.split('.')[0].replace('Z', '');
+            return new Date(dataStr + 'T' + horaStr);
+        }
+
         // Verifica o registro mais recente no banco
-        // Se foi há menos de 10 minutos → "Atenção"
-        // Se foi há mais de 10 minutos → "Normal"
+        // Menos de 10 minutos → "Atenção" (vermelho)
+        // Mais de 10 minutos → "Normal" (verde)
         function atualizarStatus(leituras) {
             var statusEl = document.getElementById('val-status');
             var trendEl = document.getElementById('status-trend');
@@ -222,29 +232,28 @@
                 return;
             }
 
-            // Pega o registro mais recente (já vem ordenado DESC)
             var maisRecente = leituras[0];
-            var dataRegistro = maisRecente.tb02_data;
-            var horaRegistro = maisRecente.tb02_hora;
-
-            // Monta a data/hora do registro
-            var dataHoraRegistro = new Date(dataRegistro + 'T' + horaRegistro);
-
-            // Pega a data/hora atual
+            var dataHoraRegistro = extrairDataHora(maisRecente);
             var agora = new Date();
-
-            // Calcula a diferença em minutos
             var diffMs = agora - dataHoraRegistro;
+
+            // Se a data veio inválida, mostra Normal e não quebra o painel
+            if (isNaN(diffMs)) {
+                statusEl.textContent = 'Normal';
+                statusEl.style.color = 'var(--accent-green)';
+                trendEl.textContent = 'Aguardando dados...';
+                trendEl.style.color = '#8b949e';
+                return;
+            }
+
             var diffMinutos = Math.floor(diffMs / 60000);
 
             if (diffMinutos < 10) {
-                // Menos de 10 minutos desde o último alerta → ATENÇÃO
                 statusEl.textContent = 'Atenção';
                 statusEl.style.color = 'var(--accent-red)';
                 trendEl.textContent = 'Ocorrência detectada há ' + diffMinutos + ' min';
                 trendEl.style.color = 'var(--accent-red)';
             } else {
-                // Mais de 10 minutos sem alertas → NORMAL
                 statusEl.textContent = 'Normal';
                 statusEl.style.color = 'var(--accent-green)';
                 trendEl.textContent = 'Sem ocorrências há ' + diffMinutos + ' min';
@@ -278,7 +287,7 @@
             document.getElementById('val-temp').innerText = ultima.tb02_temperatura + ' °C';
             var hoje = new Date().toISOString().split('T')[0];
             var ocorrenciasHoje = leituras.filter(function(l) {
-                var dataLeitura = l.tb02_data;
+                var dataLeitura = String(l.tb02_data).split('T')[0];
                 return dataLeitura === hoje && (l.tb02_led_temperatura || l.tb02_led_som);
             }).length;
             document.getElementById('val-ocorr').innerText = ocorrenciasHoje;
@@ -301,7 +310,7 @@
                 var row = document.createElement('tr');
                 var tipo = alerta.tb02_led_temperatura ? 'TEMP.' : 'SOM';
                 var nivel = alerta.tb02_led_temperatura ? alerta.tb02_temperatura + '°C' : alerta.tb02_nivel_som + 'dB';
-                var dataHora = alerta.tb02_data + ' ' + alerta.tb02_hora;
+                var dataHora = String(alerta.tb02_data).split('T')[0] + ' ' + String(alerta.tb02_hora).split('T')[0];
                 if (viewAtual === 'ruido' && !alerta.tb02_led_som) return;
                 if (viewAtual === 'temperatura' && !alerta.tb02_led_temperatura) return;
                 var colCausa = '';
@@ -331,19 +340,17 @@
         }
 
         // === SALVAR FEEDBACK ===
-        // CORREÇÃO: verifica se já existe feedback antes de criar novo
-        // Se já existe → faz PUT (não muda a data)
-        // Se não existe → faz POST (cria novo com data de hoje)
+        // Verifica se já existe feedback antes de criar novo
+        // Já existe → PUT (não altera a data)
+        // Não existe → POST (cria novo)
         async function salvarFeedback(idLeitura) {
             var causa = document.getElementById('input-causa-' + idLeitura).value;
             var acao = document.getElementById('input-acao-' + idLeitura).value;
             if (!causa && !acao) { alert('Preencha pelo menos um campo'); return; }
 
-            // Verifica se já existe feedback para esta leitura
             var existente = feedbacksGlobal.find(function(f) { return f.tb03_id_leitura === idLeitura; });
 
             if (existente) {
-                // Já existe — faz PUT (não altera a data)
                 try {
                     await fetch(API_URL + '/feedbacks/' + existente.tb03_id_feedback, {
                         method: 'PUT',
@@ -353,7 +360,6 @@
                     fetchData();
                 } catch (error) { alert('Erro ao atualizar feedback'); }
             } else {
-                // Não existe — faz POST
                 try {
                     await fetch(API_URL + '/feedbacks', {
                         method: 'POST',

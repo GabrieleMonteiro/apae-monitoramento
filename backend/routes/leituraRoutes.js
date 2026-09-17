@@ -40,7 +40,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// POST /leituras - o Arduino chama essa rota para registrar uma nova leitura
+// POST /leituras - o Arduino chessa essa rota para registrar uma nova leitura
 router.post('/', async (req, res) => {
     const { tb02_temperatura, tb02_nivel_som, tb02_id_arduino } = req.body;
 
@@ -54,12 +54,17 @@ router.post('/', async (req, res) => {
     const ledTemperatura = tb02_temperatura > LIMITE_TEMPERATURA;
     const ledSom = tb02_nivel_som > LIMITE_SOM;
 
+    // Data e hora no fuso de São Paulo (corrige o problema do UTC)
+    const agora = new Date();
+    const dataBR = agora.toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' }); // yyyy-mm-dd
+    const horaBR = agora.toLocaleTimeString('pt-BR', { hour12: false, timeZone: 'America/Sao_Paulo' }); // HH:mm:ss
+
     try {
         const [resultado] = await db.query(
             `INSERT INTO tb02_leitura
-                (tb02_temperatura, tb02_nivel_som, tb02_led_temperatura, tb02_led_som, tb02_data, tb02_hora, tb02_id_arduino)
-             VALUES (?, ?, ?, ?, CURDATE(), CURTIME(), ?)`,
-            [tb02_temperatura, tb02_nivel_som, ledTemperatura, ledSom, tb02_id_arduino]
+                (tb02_temperatura, tb02_nivel_som, tb02_led_temperatura, tb02_led_som, tb02_data, tb02_hora, tb01_id_arduino)
+             VALUES (?, ?, ?, ?, ?, ?, ?)`,
+            [tb02_temperatura, tb02_nivel_som, ledTemperatura, ledSom, dataBR, horaBR, tb02_id_arduino]
         );
 
         res.status(201).json({
