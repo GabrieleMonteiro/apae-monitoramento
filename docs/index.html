@@ -234,8 +234,9 @@
 
             var maisRecente = leituras[0];
             var dataHoraRegistro = extrairDataHora(maisRecente);
-            var agora = new Date();
-            var diffMs = agora - dataHoraRegistro;
+// "Agora" no fuso de São Paulo (mesmo fuso que o backend grava)
+var agoraSP = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
+var agora = agoraSP;            var diffMs = agora - dataHoraRegistro;
 
             // Se a data veio inválida, mostra Normal e não quebra o painel
             if (isNaN(diffMs)) {
