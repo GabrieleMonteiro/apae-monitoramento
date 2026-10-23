@@ -50,12 +50,10 @@ h1{font-size:29px;letter-spacing:-.8px;margin:7px 0 7px}
 .page{display:none;animation:fade .22s ease}.page.active{display:block}
 @keyframes fade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:none}}
 .status-banner{display:flex;align-items:center;gap:15px;padding:19px 21px;border-radius:16px;border:1px solid #6de0c244;background:linear-gradient(100deg,#39b99b16,transparent 75%),var(--surface);margin-bottom:18px}
-/* FUNCIONAL: estado de atenção do banner */
 .status-banner.atencao{border-color:#ff657a44;background:linear-gradient(100deg,#ff657a14,transparent 75%),var(--surface)}
 .status-icon{width:43px;height:43px;display:grid;place-items:center;background:#6de0c21c;border-radius:14px;color:var(--mint);font-size:22px;flex:0 0 43px}
 .status-banner strong{font-size:14px;display:block;margin-bottom:4px}.status-banner span{font-size:12px;color:var(--muted)}
 .status-right{margin-left:auto;text-align:right}.status-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:99px;background:#6de0c21c;color:var(--mint);font-size:11px;font-weight:750}
-/* FUNCIONAL: pill em alerta */
 .status-pill.alerta{background:#ff657a1c;color:var(--red)}
 .status-pill:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
 .grid{display:grid;gap:16px}.metrics{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:18px}
@@ -65,7 +63,6 @@ h1{font-size:29px;letter-spacing:-.8px;margin:7px 0 7px}
 .purple-bg{background:#8877ff22;color:var(--purple2)}.yellow-bg{background:#ffc85720;color:var(--yellow)}.red-bg{background:#ff657a20;color:var(--red)}.mint-bg{background:#6de0c21c;color:var(--mint)}
 .metric-value{font-size:30px;font-weight:760;letter-spacing:-1px;margin:13px 0 5px}.metric-value small{font-size:14px;font-weight:550;color:var(--muted);letter-spacing:0}
 .metric-foot{font-size:11px;color:var(--muted)}.metric-foot b{color:var(--mint);font-weight:650}
-/* FUNCIONAL: foot em alerta */
 .metric-foot b.alerta{color:var(--red)}
 .section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
 .section-heading h2{font-size:15px;margin:0;letter-spacing:-.2px}.section-heading p{font-size:11px;color:var(--muted);margin:5px 0 0}
@@ -86,7 +83,6 @@ td{font-size:11px;padding:14px 17px;border-top:1px solid var(--border);vertical-
 td.muted{color:var(--muted)}.type{display:inline-flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;display:inline-block}
 .level{font-weight:750}.level.noise{color:var(--yellow)}.level.temp{color:var(--red)}
 .event-state{font-size:10px;border-radius:7px;padding:5px 7px;background:#ffc8571c;color:var(--yellow)}
-/* FUNCIONAL: status como select editável */
 select.event-state{border:1px solid transparent;font-family:inherit;cursor:pointer;appearance:none;-webkit-appearance:none}
 .editable{border-bottom:1px dashed var(--muted);padding-bottom:2px;cursor:text;outline:none;min-width:80px;display:inline-block}
 .editable:focus{border-color:var(--purple);background:var(--surface2)}
@@ -107,7 +103,6 @@ select.event-state{border:1px solid transparent;font-family:inherit;cursor:point
 @media(max-width:1200px){.metrics{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:repeat(3,1fr)}main{padding:25px 22px}}
 @media(max-width:800px){.sidebar{width:70px;padding:18px 9px}.brand{padding:4px 5px 25px}.brand-copy,.nav-label,.nav-text,.motto,.profile-copy{display:none}.brand-mark{width:43px;flex:0 0 43px}nav a{justify-content:center;padding:12px 5px}nav a .ico{font-size:19px}.profile{justify-content:center;padding:14px 0 0}.sidebar-bottom{padding:0}.app main{margin-left:70px;width:calc(100% - 70px);padding:22px 15px}.topbar{align-items:flex-start;flex-direction:column}.top-actions{width:100%;justify-content:space-between}.charts,.page-grid,.split{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.date{display:none}}
 @media(max-width:480px){h1{font-size:25px}.metrics{grid-template-columns:1fr 1fr;gap:9px}.card{padding:14px}.metric-value{font-size:24px}.steps{grid-template-columns:1fr}.top-actions{flex-wrap:wrap}.status-banner{align-items:flex-start}.status-right{display:none}}
-/* Landing page / identidade visual */
 body.landing-mode{overflow:hidden}
 .landing{display:none;min-height:100vh;position:relative;overflow:hidden;background:
  radial-gradient(ellipse at 76% 26%,rgba(113,92,255,.23),transparent 34%),
@@ -115,7 +110,7 @@ body.landing-mode{overflow:hidden}
 body.landing-mode .landing{display:block}
 body.landing-mode .app{display:none}
 .landing:before{content:"";position:absolute;width:470px;height:470px;border:1px solid #8877ff24;border-radius:50%;right:-110px;top:-160px;box-shadow:0 0 0 42px #8877ff09,0 0 0 90px #8877ff06;pointer-events:none}
-.landing:after{content:"";position:absolute;width:280px;height:280px;border:1px solid #6de0c222;border-radius:50%;left:-130px;bottom:-120px;box-shadow:0 0 0 35px #6de0c208;pointer-events:none}
+.landing:after{content:"";position:absolute;width:280px;height:280px;border:1px solid #6de0c222;border-radius:50%;left:-130px;bottom:-120px;box-shadow:0 0 0 35px #6de0c208,0 0 0 70px #6de0c204;pointer-events:none}
 .landing-top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:28px clamp(22px,5vw,76px)}
 .landing-brand{display:flex;align-items:center;gap:13px}
 .landing-mark{width:48px;height:48px;border-radius:16px;background:linear-gradient(140deg,#a99cff,#5b49e7 65%,#3830a4);display:grid;place-items:center;color:white;font-size:25px;box-shadow:0 10px 35px #6252e94a}
@@ -230,13 +225,10 @@ body.light .landing{background:radial-gradient(ellipse at 76% 26%,rgba(111,91,22
 </aside>
 <main>
 <header class="topbar"><div><div class="eyebrow">InovaApae / Ambiente inteligente</div><h1 id="page-title">Visão geral</h1><p class="subtitle" id="page-subtitle">Informação clara para um ambiente mais acolhedor.</p></div>
-<!-- FUNCIONAL: badge mostra última atualização real -->
 <div class="top-actions"><span class="date" id="sys-badge">◷ &nbsp; Última atualização: --:--:--</span><button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">☼ &nbsp; Tema claro</button></div></header>
 <section class="page active" id="visao-geral">
-  <!-- FUNCIONAL: banner dinâmico (normal/atenção/sem dados) -->
   <div class="status-banner" id="banner-status"><div class="status-icon">⌛</div><div><strong>Conectando à API</strong><span>Aguardando leituras dos sensores.</span></div><div class="status-right"><span class="status-pill">Monitoramento</span></div></div>
   <div class="grid metrics">
-    <!-- FUNCIONAL: valores preenchidos por JS -->
     <article class="card"><div class="metric-head"><span class="metric-label">Ruído atual</span><span class="metric-icon yellow-bg">〰</span></div><div class="metric-value"><span id="m-som">--</span> <small>dB</small></div><div class="metric-foot" id="f-m-som"><b>● Aguardando</b> · Limite: 80 dB</div></article>
     <article class="card"><div class="metric-head"><span class="metric-label">Temperatura atual</span><span class="metric-icon red-bg">♨</span></div><div class="metric-value"><span id="m-temp">--</span> <small>°C</small></div><div class="metric-foot" id="f-m-temp"><b>● Aguardando</b> · Limite: 28 °C</div></article>
     <article class="card"><div class="metric-head"><span class="metric-label">Ocorrências hoje</span><span class="metric-icon purple-bg">▤</span></div><div class="metric-value" id="m-ocorr">--</div><div class="metric-foot">Leituras acima do limite hoje</div></article>
@@ -246,7 +238,12 @@ body.light .landing{background:radial-gradient(ellipse at 76% 26%,rgba(111,91,22
     <article class="card"><div class="section-heading"><div><h2>Oscilação do ruído</h2><p>Variação ao longo do período · decibéis</p></div><span class="metric-icon yellow-bg">〰</span></div><div class="chart-wrap"><svg viewBox="0 0 480 205" role="img" aria-label="Gráfico de ruído"><g><line class="gridline" x1="44" y1="25" x2="465" y2="25"/><line class="gridline" x1="44" y1="62" x2="465" y2="62"/><line class="gridline" x1="44" y1="99" x2="465" y2="99"/><line class="gridline" x1="44" y1="136" x2="465" y2="136"/><line class="gridline" x1="44" y1="173" x2="465" y2="173"/></g><g class="axis" id="ax-cRuido"><text x="8" y="29">100</text><text x="16" y="66">75</text><text x="16" y="103">50</text><text x="16" y="140">25</text><text x="25" y="177">0</text></g><g id="plot-cRuido"></g></svg></div><div class="legend"><span><i style="background:var(--yellow)"></i>Nível registrado</span><span><i style="background:var(--yellow);border-top:1px dashed"></i>Limite configurado</span></div></article>
     <article class="card"><div class="section-heading"><div><h2>Oscilação da temperatura</h2><p>Variação ao longo do período · Celsius</p></div><span class="metric-icon red-bg">♨</span></div><div class="chart-wrap"><svg viewBox="0 0 480 205" role="img" aria-label="Gráfico de temperatura"><g><line class="gridline" x1="44" y1="25" x2="465" y2="25"/><line class="gridline" x1="44" y1="62" x2="465" y2="62"/><line class="gridline" x1="44" y1="99" x2="465" y2="99"/><line class="gridline" x1="44" y1="136" x2="465" y2="136"/><line class="gridline" x1="44" y1="173" x2="465" y2="173"/></g><g class="axis" id="ax-cTemp"><text x="16" y="29">40°</text><text x="16" y="66">30°</text><text x="16" y="103">20°</text><text x="16" y="140">10°</text><text x="25" y="177">0°</text></g><g id="plot-cTemp"></g></svg></div><div class="legend"><span><i style="background:var(--red)"></i>Temperatura registrada</span><span><i style="background:var(--red)"></i>Limite configurado</span></div></article>
   </div>
-  <article class="card table-card"><div class="table-top"><div class="section-heading" style="margin:0"><div><h2>Ocorrências recentes</h2><p>Registros vindos dos sensores em tempo real.</p></div></div><button class="primary-btn" onclick="enableEditing()">✎ &nbsp; Editar registros</button></div>
+  <article class="card table-card"><div class="table-top"><div class="section-heading" style="margin:0"><div><h2>Ocorrências recentes</h2><p>Registros vindos dos sensores em tempo real.</p></div></div>
+  <!-- CORREÇÃO: seletor de professor no HTML (antes estava dentro do JS) -->
+  <div style="display:flex;gap:10px;align-items:center">
+    <select id="sel-professor" class="ghost-btn" style="max-width:200px"><option value="">— professor —</option></select>
+    <button class="primary-btn" onclick="enableEditing()">✎ &nbsp; Editar registros</button>
+  </div></div>
     <div class="table-scroll"><table><thead><tr><th>DATA E HORA</th><th>TIPO</th><th>NÍVEL</th><th>POSSÍVEL FATOR</th><th>AÇÃO DO PROFESSOR</th><th>STATUS</th></tr></thead><tbody id="tb-ocorr"></tbody></table></div><div class="table-bottom"><span>Salve o fator e a ação do professor para registrar no banco.</span><span id="tb-count">--</span></div>
   </article>
 </section>
@@ -300,24 +297,22 @@ body.light .landing{background:radial-gradient(ellipse at 76% 26%,rgba(111,91,22
   </div>
   <div class="notice"><strong>Importante:</strong> este guia oferece informações gerais e não substitui protocolos individuais, orientação de profissionais ou os procedimentos de segurança da instituição. Nem todo desconforto é causado por ruído ou temperatura; evite conclusões automáticas.</div>
 </section>
-<!-- FUNCIONAL: rodapé atualizado -->
 <footer style="margin-top:28px;padding:17px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:15px;color:var(--muted);font-size:10px"><span>INOVAAPAE · SALA INTELIGENTE</span><span>Dados em tempo real · Atualização a cada 30 segundos</span></footer>
 </main>
 </div>
 <script>
 /* ================================================================
-   FUNCIONAL — CONEXÃO COM O BANCO VIA API (GitHub/Render)
-   Ajuste EP_LEITURAS e EP_FEEDBACK conforme as rotas do server.js
+   CONEXÃO COM O BANCO VIA API (Render + TiDB)
    ================================================================ */
 const CONFIG={
   API_BASE:"https://apae-monitoramento.onrender.com",
   EP_LEITURAS:"/leituras",
-  EP_FEEDBACK:"/feedback",
+  EP_FEEDBACK:"/feedbacks",        // se der 404, troque para "/feedback"
+  EP_PROFESSORES:"/professores",   // se der 404, troque para "/professor"
   LIMITE_SOM:80,
   LIMITE_TEMP:28,
   REFRESH_MS:30000
 };
-
 const titles={
  'visao-geral':['Visão geral','Informação clara para um ambiente mais acolhedor.'],
  'ruido':['Monitoramento de ruído','Acompanhe os níveis sonoros e consulte as ocorrências registradas.'],
@@ -325,7 +320,6 @@ const titles={
  'como-funciona':['Como funciona','Conheça o caminho dos dados até a ação do professor.'],
  'orientacoes':['Guia de acolhimento','Orientações gerais para apoiar um ambiente mais inclusivo.']
 };
-
 /* ---------- Navegação / tema / landing (do template) ---------- */
 function goTo(id){
  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
@@ -357,33 +351,83 @@ function toggleTheme(){
 }
 document.getElementById('themeToggle').addEventListener('click',toggleTheme);
 document.getElementById('landingThemeToggle').addEventListener('click',toggleTheme);
-
-/* ---------- FUNCIONAL: helpers de dados ---------- */
+/* ---------- Helpers de dados ---------- */
 const $=id=>document.getElementById(id);
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function campo(o,nomes){if(!o)return null;for(const n of nomes){if(o[n]!==undefined&&o[n]!==null&&o[n]!=='')return o[n];}return null;}
 function num(v){if(v===null||v===undefined)return null;const n=parseFloat(v);return isNaN(n)?null:n;}
 function som(l){return num(campo(l,['tb02_nivel_som','nivel_som','som']));}
 function temp(l){return num(campo(l,['tb02_temperatura','temperatura','temp']));}
-function idDe(l){return campo(l,['tb02_id','id'])||'';}
+/* CORREÇÃO 3: o ID real da leitura é tb02_id_leitura (antes procurava tb02_id/id → feedback nunca era encontrado) */
+function idDe(l){return campo(l,['tb02_id_leitura','tb02_id','id'])||'';}
+/* CORREÇÃO 2: data LOCAL com tb02_data (YYYY-MM-DD) + tb02_hora (HH:MM:SS).
+   NUNCA montar Date com a string completa — tb02_data é meia-noite UTC e viraria "21:00" do dia anterior */
 function dataDe(l){
- const raw=campo(l,['tb02_data','tb02_criado_em','tb02_datetime','criado_em','created_at','data','horario']);
- if(!raw)return null;
- const d=new Date(raw);
+ const dRaw=campo(l,['tb02_data']);
+ if(!dRaw)return null;
+ const so=String(dRaw).slice(0,10);
+ const hRaw=String(campo(l,['tb02_hora'])||'00:00:00');
+ const p=so.split('-'),h=hRaw.split(':');
+ const d=new Date(+p[0],+p[1]-1,+p[2],+(h[0]||0),+(h[1]||0),+(h[2]||0));
  return isNaN(d.getTime())?null:d;
 }
-function alertaSom(l){const v=som(l);return v!==null&&v>CONFIG.LIMITE_SOM;}
-function alertaTemp(l){const v=temp(l);return v!==null&&v>CONFIG.LIMITE_TEMP;}
+/* CORREÇÃO: alerta usa o LED que o BACKEND decidiu (tb02_led_*); fallback pelo limite */
+function alertaSom(l){
+ const led=campo(l,['tb02_led_som']);
+ if(led!==null&&Number(led)===1)return true;
+ const v=som(l);return v!==null&&v>CONFIG.LIMITE_SOM;
+}
+function alertaTemp(l){
+ const led=campo(l,['tb02_led_temperatura']);
+ if(led!==null&&Number(led)===1)return true;
+ const v=temp(l);return v!==null&&v>CONFIG.LIMITE_TEMP;
+}
 function ehHoje(d){if(!d)return false;const h=new Date();return d.getDate()===h.getDate()&&d.getMonth()===h.getMonth()&&d.getFullYear()===h.getFullYear();}
 function fmtHora(d){return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
 function fmtDia(d){return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();}
 function fmtHHMMSS(d){return fmtHora(d)+':'+String(d.getSeconds()).padStart(2,'0');}
 function setTxt(el,v){const e=$(el);if(e)e.textContent=(v===null||v===undefined)?'--':v;}
 function maxDe(arr,fn){return arr.reduce((m,x)=>{const v=fn(x);return v!==null&&v>(m===null?-Infinity:m)?v:m;},null);}
-
-/* ---------- FUNCIONAL: busca no banco ---------- */
+/* ---------- Estado global ---------- */
 let leituras=[];
 let apiOk=false;
+let feedbacks={};    // tb03_id_leitura -> {id, causa, comentario, professor}
+let professores=[];
+/* ---------- Feedbacks REAIS do banco (tb03_feedback) ---------- */
+async function carregarFeedbacks(){
+ try{
+  const r=await fetch(CONFIG.API_BASE+CONFIG.EP_FEEDBACK,{cache:'no-store'});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  const d=await r.json();
+  feedbacks={};
+  (Array.isArray(d)?d:[]).forEach(f=>{
+   const idLeitura=Number(campo(f,['tb03_id_leitura']));
+   if(!idLeitura)return;
+   feedbacks[idLeitura]={
+    id:campo(f,['tb03_id_feedback']),
+    causa:campo(f,['tb03_causa'])||'',
+    comentario:campo(f,['tb03_comentario'])||'',
+    professor:campo(f,['nome_professor','tb04_nome'])||''
+   };
+  });
+ }catch(e){console.warn('Feedbacks indisponíveis:',e);}
+}
+/* CORREÇÃO 4: função própria — busca PROFESSORES e popula o seletor
+   (antes tinha virado uma cópia do carregar(), buscando /leituras) */
+async function carregarProfessores(){
+ try{
+  const r=await fetch(CONFIG.API_BASE+CONFIG.EP_PROFESSORES,{cache:'no-store'});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  professores=await r.json();
+  const sel=$('sel-professor');
+  if(sel){
+   sel.innerHTML='<option value="">— professor —</option>'+
+    professores.map(p=>'<option value="'+esc(campo(p,['tb04_id_professor']))+'">'+
+     esc(campo(p,['tb04_nome']))+'</option>').join('');
+  }
+ }catch(e){console.warn('Professores indisponíveis:',e);}
+}
+/* ---------- Busca no banco (leituras + feedbacks) ---------- */
 async function carregar(){
  try{
   const r=await fetch(CONFIG.API_BASE+CONFIG.EP_LEITURAS,{cache:'no-store'});
@@ -396,6 +440,7 @@ async function carregar(){
   console.warn('API indisponível:',e);
   apiOk=false;
  }
+ await carregarFeedbacks();   // CORREÇÃO 5: feedbacks recarregados a cada ciclo de 30 s
  render();
  const b=$('sys-badge');
  if(b){
@@ -403,8 +448,7 @@ async function carregar(){
   else{b.style.color='var(--red)';b.innerHTML='◷ &nbsp; Sem resposta da API';}
  }
 }
-
-/* ---------- FUNCIONAL: gráficos SVG ---------- */
+/* ---------- Gráficos SVG ---------- */
 function plotar(idPlot,cfg,vals,datas){
  const g=$(idPlot),ax=$(cfg.ax);
  if(!g)return;
@@ -432,17 +476,17 @@ function plotar(idPlot,cfg,vals,datas){
   ax.innerHTML=a;
  }
 }
-
-/* ---------- FUNCIONAL: linhas das tabelas ---------- */
+/* ---------- Linhas das tabelas (fator/ação vêm da tb03_feedback REAL) ---------- */
 function linhaOcorr(l,comTipo,editavel){
- const d=dataDe(l),id=idDe(l),aS=alertaSom(l),aT=alertaTemp(l);
+ const d=dataDe(l),id=Number(idDe(l)),aS=alertaSom(l),aT=alertaTemp(l);
  const tipo=aS?'Ruído':'Temperatura';
  const cor=aS?'var(--yellow)':'var(--red)';
  const nivel=aS?((som(l)??0)+' dB'):((temp(l)??0)+' °C');
  const cls=aS?'level noise':'level temp';
- const f=campo(l,['tb02_fator','fator'])||'';
- const a=campo(l,['tb02_acao_professor','acao_professor'])||'';
- const st=campo(l,['tb02_status','status'])||'Em observação';
+ const fb=feedbacks[id]||null;
+ const f=(fb&&fb.causa)||'';
+ const a=(fb&&fb.comentario)||'';
+ const st=(fb&&(fb.causa||fb.comentario))?'Acompanhado':'Em observação';
  const dtx=d?(fmtDia(d)+' · '+fmtHora(d)):'--';
  const tipoTd=comTipo?'<td><span class="type"><i class="dot" style="background:'+cor+'"></i>'+tipo+'</span></td>':'';
  const stTd=editavel
@@ -459,17 +503,16 @@ function fill(id,html,colspan){
  const e=$(id);if(!e)return;
  e.innerHTML=html||'<tr><td colspan="'+colspan+'" class="muted" style="text-align:center;padding:22px">Nenhuma ocorrência registrada ainda.</td></tr>';
 }
-
-/* ---------- FUNCIONAL: render geral ---------- */
+/* ---------- Render geral ---------- */
 function render(){
  const l=leituras[0];
  const hoje=leituras.filter(x=>ehHoje(dataDe(x)));
  const ocorr=leituras.filter(x=>alertaSom(x)||alertaTemp(x));
  const ocorrHoje=hoje.filter(x=>alertaSom(x)||alertaTemp(x));
- const acoesHoje=hoje.filter(x=>campo(x,['tb02_fator','fator'])||campo(x,['tb02_acao_professor','acao_professor']));
+ /* CORREÇÃO: "Ações registradas" conta ocorrências com feedback REAL no banco */
+ const acoesHoje=hoje.filter(x=>feedbacks[Number(idDe(x))]);
  const pico=maxDe(hoje,som), maior=maxDe(hoje,temp);
  const ocrHoje=hoje.filter(alertaSom).length, otHoje=hoje.filter(alertaTemp).length;
-
  /* métricas */
  setTxt('m-som',l?som(l):null);
  setTxt('m-temp',l?temp(l):null);
@@ -489,12 +532,10 @@ function render(){
  if(fsa)fsa.innerHTML=l?(alertaSom(l)?'<b class="alerta">● Atenção</b>':'<b>● Normal</b>'):'<b>● Aguardando</b>';
  const fta=$('f-m-temp-atual');
  if(fta)fta.innerHTML=l?(alertaTemp(l)?'<b class="alerta">● Atenção</b>':'<b>● Normal</b>'):'<b>● Aguardando</b>';
-
  /* pills das abas de detalhe */
  const pr=$('pill-ruido'),pt=$('pill-temp');
  if(pr)pr.textContent=apiOk?'Monitoramento ativo':'Sem resposta da API';
  if(pt)pt.textContent=apiOk?'Monitoramento ativo':'Sem resposta da API';
-
  /* banner de status da sala */
  const b=$('banner-status');
  if(b){
@@ -510,14 +551,12 @@ function render(){
    b.innerHTML='<div class="status-icon">✓</div><div><strong>Sala em estado normal</strong><span>Os indicadores estão dentro dos limites configurados.</span></div><div class="status-right"><span class="status-pill">Monitoramento ativo</span></div>';
   }
  }
-
  /* tabelas de ocorrências */
  fill('tb-ocorr',ocorr.slice(0,12).map(x=>linhaOcorr(x,true,true)).join(''),6);
  fill('tb-ruido',ocorr.filter(alertaSom).slice(0,12).map(x=>linhaOcorr(x,false,false)).join(''),5);
  fill('tb-temp',ocorr.filter(alertaTemp).slice(0,12).map(x=>linhaOcorr(x,false,false)).join(''),5);
  const c=$('tb-count');
  if(c)c.textContent=fmtDia(new Date())+' — '+String(ocorr.length).padStart(2,'0')+' ocorrências';
-
  /* gráficos: últimas 13 leituras em ordem cronológica */
  const serie=leituras.slice(0,13).reverse();
  const ds=serie.map(dataDe);
@@ -526,8 +565,7 @@ function render(){
  plotar('plot-cRuidoD',{ax:'ax-cRuidoD',x0:55,x1:780,y0:205,y1:25,max:100,limite:CONFIG.LIMITE_SOM,cor:'yellow',r:4},serie.map(x=>som(x)??0),ds);
  plotar('plot-cTempD',{ax:'ax-cTempD',x0:55,x1:780,y0:205,y1:25,max:40,limite:CONFIG.LIMITE_TEMP,cor:'red',r:4},serie.map(x=>temp(x)??0),ds);
 }
-
-/* ---------- FUNCIONAL: editar + salvar no banco ---------- */
+/* ---------- Editar + salvar no banco (POST novo / PUT existente) ---------- */
 let editing=false;
 function enableEditing(){
  const btn=document.querySelector('#visao-geral .table-top button');
@@ -547,7 +585,7 @@ function enableEditing(){
   if(!fEl||!aEl||!sEl)return;
   const f=fEl.textContent.trim(),a=aEl.textContent.trim(),s=sEl.value;
   if(f!==tr.dataset.f||a!==tr.dataset.a||s!==tr.dataset.s){
-   trocas.push({id:Number(tr.dataset.id),tb02_fator:f,tb02_acao_professor:a,tb02_status:s});
+   trocas.push({id:Number(tr.dataset.id),fator:f,acao:a,status:s});
   }
  });
  if(trocas.length===0){
@@ -558,13 +596,22 @@ function enableEditing(){
  }
  btn.innerHTML='⏳ &nbsp; Salvando...';
  btn.disabled=true;
- Promise.all(trocas.map(t=>
-  fetch(CONFIG.API_BASE+CONFIG.EP_FEEDBACK,{
-   method:'POST',
+ const idProf=Number(($('sel-professor')||{}).value)||1; // professor selecionado
+ Promise.all(trocas.map(t=>{
+  const fb=feedbacks[t.id];
+  /* formato EXATO que o feedbackRoutes.js espera (tb03_*) */
+  const corpo=fb
+   ? {tb03_comentario:t.acao,tb03_causa:t.fator}                                            // já existe → PUT
+   : {tb03_comentario:t.acao,tb03_causa:t.fator,tb03_id_professor:idProf,tb03_id_leitura:t.id}; // novo → POST
+  const url=fb
+   ? CONFIG.API_BASE+CONFIG.EP_FEEDBACK+'/'+fb.id
+   : CONFIG.API_BASE+CONFIG.EP_FEEDBACK;
+  return fetch(url,{
+   method:fb?'PUT':'POST',
    headers:{'Content-Type':'application/json'},
-   body:JSON.stringify(t)
-  }).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r;})
- )).then(()=>{
+   body:JSON.stringify(corpo)
+  }).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r;});
+ })).then(()=>{
   btn.innerHTML='✎ &nbsp; Editar registros';
   btn.disabled=false;
   editing=false;
@@ -576,10 +623,8 @@ function enableEditing(){
   btn.disabled=false;
  });
 }
-
 /* ---------- Inicialização ---------- */
-const initial=location.hash.replace('#','');
-if(initial && titles[initial]) { /* A tela inicial permanece visível até o usuário acessar o painel. */ }
+carregarProfessores();   // popula o seletor de professor uma vez
 carregar();
 setInterval(carregar,CONFIG.REFRESH_MS);
 </script>
