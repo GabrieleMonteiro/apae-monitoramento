@@ -40,9 +40,13 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// POST /leituras - o Arduino chessa essa rota para registrar uma nova leitura
+// POST /leituras - o ESP32 chama essa rota para registrar uma nova leitura
 router.post('/', async (req, res) => {
     const { tb02_temperatura, tb02_nivel_som, tb02_id_arduino } = req.body;
+
+    // v3.4: flag opcional vindo do ESP32 — marca que o LED amarelo
+    // físico acendeu neste ciclo (detecção adaptativa pela sala)
+    const ruidoAlerta = req.body.tb02_ruido_alerta == 1;
 
     if (tb02_temperatura === undefined || tb02_nivel_som === undefined || !tb02_id_arduino) {
         return res.status(400).json({
@@ -50,9 +54,12 @@ router.post('/', async (req, res) => {
         });
     }
 
-    // O backend decide se passou do limite e qual LED deve acender
+    // O backend decide se passou do limite e qual LED deve acender.
+    // v3.4: a ocorrência de ruído é registrada se:
+    //   1) o valor medido passou do corte fixo (80 dB), OU
+    //   2) o ESP32 avisou que o LED adaptativo acendeu (tb02_ruido_alerta = 1)
     const ledTemperatura = tb02_temperatura > LIMITE_TEMPERATURA;
-    const ledSom = tb02_nivel_som > LIMITE_SOM;
+    const ledSom = (tb02_nivel_som > LIMITE_SOM) || ruidoAlerta;
 
     // Data e hora no fuso de São Paulo (corrige o problema do UTC)
     const agora = new Date();

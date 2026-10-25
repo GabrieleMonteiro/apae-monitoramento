@@ -23,7 +23,7 @@ button,a{font:inherit}
 .app{display:flex;min-height:100vh}
 .sidebar{width:248px;background:var(--sidebar);border-right:1px solid var(--border);padding:26px 16px;display:flex;flex-direction:column;position:fixed;inset:0 auto 0 0;z-index:5}
 .brand{display:flex;align-items:center;gap:12px;padding:4px 8px 30px}
-.brand-mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(140deg,#9b8aff,#5140d2);display:grid;place-items:center;color:white;font-size:22px;box-shadow:0 8px 22px #6554dc55}
+.brand-mark{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center}.brand-logo{width:100%;height:100%;object-fit:contain;display:block}
 .brand strong{display:block;font-size:15px;letter-spacing:.2px}.brand span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
 .nav-label{font-size:10px;letter-spacing:1.5px;color:var(--muted);padding:0 12px 12px;text-transform:uppercase}
 nav{display:grid;gap:6px}
@@ -44,6 +44,13 @@ h1{font-size:29px;letter-spacing:-.8px;margin:7px 0 7px}
 .top-actions{display:flex;align-items:center;gap:10px}
 .date{font-size:11px;color:var(--muted);padding-right:8px}
 .theme-toggle,.ghost-btn,.primary-btn{border:1px solid var(--border);border-radius:11px;padding:10px 13px;cursor:pointer;color:var(--text);background:var(--surface);font-size:12px;transition:.2s}
+.help-tip{position:relative;display:inline-flex;align-items:center;vertical-align:middle;margin-left:5px;cursor:help}
+.help-tip-button{display:inline-grid;place-items:center;width:16px;height:16px;border:1px solid var(--muted);border-radius:50%;font-size:10px;font-weight:800;color:var(--muted);line-height:1}
+.help-tip-content{display:none;position:absolute;z-index:20;right:calc(100% + 8px);left:auto;top:50%;bottom:auto;transform:translateY(-50%);width:260px;padding:11px 13px;border:1px solid var(--border);border-radius:10px;background:var(--surface2);color:var(--text);font-size:11px;font-weight:400;line-height:1.55;box-shadow:var(--shadow);white-space:normal;text-align:left}
+.help-tip:hover .help-tip-content,.help-tip:focus-within .help-tip-content{display:block}
+.header-home{white-space:nowrap}
+.status-help{display:inline-flex;align-items:center;gap:6px}
+.status-help .help-tip-content{width:285px;max-width:min(285px,70vw)}
 .theme-toggle:hover,.ghost-btn:hover{border-color:var(--purple)}
 .primary-btn{background:var(--purple);color:#fff;border-color:var(--purple);font-weight:650}
 .primary-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
@@ -96,29 +103,31 @@ select.event-state{border:1px solid transparent;font-family:inherit;cursor:point
 .step-number{width:27px;height:27px;display:grid;place-items:center;border-radius:9px;background:var(--purple);color:white;font-size:12px;font-weight:800;margin-bottom:14px}
 .step-emoji{font-size:23px;margin-bottom:12px}.step strong{font-size:12px;display:block;margin-bottom:7px}.step p{font-size:11px;line-height:1.55;color:var(--muted);margin:0}
 .guide-list{display:grid;gap:10px}.guide-item{display:flex;gap:12px;padding:14px;border:1px solid var(--border);border-radius:13px;background:var(--surface)}
-.guide-symbol{width:36px;height:36px;flex:0 0 36px;border-radius:11px;background:var(--surface2);display:grid;place-items:center;font-size:17px}
-.guide-item strong{font-size:12px;display:block;margin:2px 0 5px}.guide-item p{margin:0;font-size:11px;color:var(--muted);line-height:1.6}
+.guide-symbol{width:36px;height:36px;flex:0 0 36px;border-radius:11px;background:var(--surface2);display:grid;place-items:center;font-size:17px}.guide-symbol.guide-number{width:auto;min-width:70px;flex:0 0 70px;display:flex;justify-content:center;gap:7px;font-size:15px;font-weight:700;color:var(--mint)}.guide-number span:first-child{font-size:12px}
+.guide-item strong{font-size:12px;display:block;margin:2px 0 5px;line-height:1.55}.guide-item p{margin:0;font-size:11px;color:var(--muted);line-height:1.6}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .notice{margin-top:16px;border-left:3px solid var(--purple);padding:12px 14px;background:var(--surface2);color:var(--muted);font-size:11px;line-height:1.7;border-radius:0 9px 9px 0}
 @media(max-width:1200px){.metrics{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:repeat(3,1fr)}main{padding:25px 22px}}
 @media(max-width:800px){.sidebar{width:70px;padding:18px 9px}.brand{padding:4px 5px 25px}.brand-copy,.nav-label,.nav-text,.motto,.profile-copy{display:none}.brand-mark{width:43px;flex:0 0 43px}nav a{justify-content:center;padding:12px 5px}nav a .ico{font-size:19px}.profile{justify-content:center;padding:14px 0 0}.sidebar-bottom{padding:0}.app main{margin-left:70px;width:calc(100% - 70px);padding:22px 15px}.topbar{align-items:flex-start;flex-direction:column}.top-actions{width:100%;justify-content:space-between}.charts,.page-grid,.split{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.date{display:none}}
 @media(max-width:480px){h1{font-size:25px}.metrics{grid-template-columns:1fr 1fr;gap:9px}.card{padding:14px}.metric-value{font-size:24px}.steps{grid-template-columns:1fr}.top-actions{flex-wrap:wrap}.status-banner{align-items:flex-start}.status-right{display:none}}
-body.landing-mode{overflow:hidden}
-.landing{display:none;min-height:100vh;position:relative;overflow:hidden;background:
+body.landing-mode {
+    overflow-x: hidden;
+    overflow-y: auto;
+}.landing{display:none;min-height:100vh;position:relative;overflow:hidden;background:
  radial-gradient(ellipse at 76% 26%,rgba(113,92,255,.23),transparent 34%),
  radial-gradient(ellipse at 15% 85%,rgba(72,193,190,.09),transparent 30%),var(--bg)}
 body.landing-mode .landing{display:block}
 body.landing-mode .app{display:none}
 .landing:before{content:"";position:absolute;width:470px;height:470px;border:1px solid #8877ff24;border-radius:50%;right:-110px;top:-160px;box-shadow:0 0 0 42px #8877ff09,0 0 0 90px #8877ff06;pointer-events:none}
 .landing:after{content:"";position:absolute;width:280px;height:280px;border:1px solid #6de0c222;border-radius:50%;left:-130px;bottom:-120px;box-shadow:0 0 0 35px #6de0c208,0 0 0 70px #6de0c204;pointer-events:none}
-.landing-top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:28px clamp(22px,5vw,76px)}
+.landing-top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:14px clamp(22px,5vw,76px)}
 .landing-brand{display:flex;align-items:center;gap:13px}
 .landing-mark{width:48px;height:48px;border-radius:16px;background:linear-gradient(140deg,#a99cff,#5b49e7 65%,#3830a4);display:grid;place-items:center;color:white;font-size:25px;box-shadow:0 10px 35px #6252e94a}
 .landing-brand strong{display:block;font-size:16px;letter-spacing:.2px}.landing-brand span{display:block;color:var(--muted);font-size:11px;margin-top:4px}
 .landing-top-right{display:flex;align-items:center;gap:12px}
 .landing-kicker{display:flex;align-items:center;gap:9px;font-size:10px;letter-spacing:1.7px;text-transform:uppercase;color:var(--purple2);font-weight:800}
 .landing-kicker:before{content:"";height:1px;width:26px;background:var(--purple2)}
-.landing-content{position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:clamp(24px,5vh,60px) clamp(22px,5vw,76px) 48px;display:grid;grid-template-columns:minmax(320px,.88fr) minmax(460px,1.12fr);gap:clamp(30px,5vw,85px);align-items:center;min-height:calc(100vh - 110px)}
+.landing-content{position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:clamp(12px,2vh,24px) clamp(22px,5vw,76px) 20px;display:grid;grid-template-columns:minmax(320px,.88fr) minmax(460px,1.12fr);gap:clamp(30px,5vw,85px);align-items:center;min-height:calc(100vh - 76px)}
 .landing-copy{max-width:590px}
 .landing-copy h1{font-size:clamp(42px,5.1vw,72px);line-height:1.02;letter-spacing:-2.8px;margin:20px 0 22px;font-weight:780}
 .landing-copy h1 em{font-style:normal;background:linear-gradient(100deg,#b9adff 5%,#8070ff 52%,#6de0c2 100%);background-clip:text;-webkit-background-clip:text;color:transparent}
@@ -138,6 +147,14 @@ body.landing-mode .app{display:none}
 .hover-card:hover{flex:1.25;transform:translateY(-8px) scale(1.015);border-color:color-mix(in srgb,var(--accent) 60%,var(--border));z-index:2}
 .hover-card:hover:before{transform:scale(1.65);opacity:.22}
 .hover-card:not(:hover){transform:translateY(0)}
+.logo-apae {
+    width: 100%;
+    max-width: 135px;
+    height: 72px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
 .hover-card .hc-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:30px}
 .hc-icon{width:39px;height:39px;border-radius:13px;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);display:grid;place-items:center;font-size:20px}
 .hc-index{font-size:10px;color:var(--muted);letter-spacing:1px}
@@ -160,8 +177,8 @@ body.light .landing{background:radial-gradient(ellipse at 76% 26%,rgba(111,91,22
 <div class="landing" id="landing">
   <header class="landing-top">
     <div class="landing-brand">
-      <div class="landing-mark">✳</div>
-      <div><strong>InovaApae</strong><span>Sala Inteligente · Tecnologia assistiva</span></div>
+<img src="logo-apae.png" alt="Logo da APAE" class="logo-apae">
+      <div><span>Sala Inteligente · Tecnologia assistiva</span></div>
     </div>
     <div class="landing-top-right">
       <span class="date">UM AMBIENTE MAIS ACOLHEDOR COMEÇA COM ATENÇÃO</span>
@@ -175,7 +192,6 @@ body.light .landing{background:radial-gradient(ellipse at 76% 26%,rgba(111,91,22
       <p class="landing-description">Um sistema de apoio ao professor que acompanha o ruído e a temperatura da sala, transformando dados ambientais em informação clara para ajudar a construir um espaço de aprendizagem mais confortável e inclusivo.</p>
       <div class="landing-actions">
         <button class="enter-btn" onclick="enterDashboard()">Acessar painel de monitoramento <span>→</span></button>
-        <button class="ghost-btn" onclick="landingScrollToFeatures()">Conheça o sistema ↓</button>
       </div>
       <div class="landing-caption"><b></b> Inovação, observação e acolhimento em um só lugar.</div>
     </section>
@@ -183,60 +199,59 @@ body.light .landing{background:radial-gradient(ellipse at 76% 26%,rgba(111,91,22
       <div class="showcase-label"><span>Um olhar geral sobre a sala</span><span>Explore passando o cursor →</span></div>
       <div class="hover-track">
         <article class="hover-card" style="--accent:var(--yellow);--glow:var(--yellow)">
-          <div class="hc-top"><div class="hc-icon">〰</div><span class="hc-index">01 / SOM</span></div>
+          <div class="hc-top"><div class="hc-icon">🔊</div><span class="hc-index">01 / SOM</span></div>
           <h3>Ruído em tempo real</h3>
           <p>Acompanhe as oscilações sonoras e identifique quando o nível ultrapassa o limite configurado.</p>
           <div class="mini-chart" aria-hidden="true"><i style="height:30%"></i><i style="height:48%"></i><i style="height:40%"></i><i style="height:76%"></i><i style="height:58%"></i><i style="height:88%"></i><i style="height:53%"></i><i style="height:67%"></i><i style="height:42%"></i></div>
-          <div class="hc-line"></div><div class="hc-footer"><span><i class="hc-dot"></i>Sensor sonoro</span><span>Ver detalhes ↗</span></div>
+          <div class="hc-line"></div><div class="hc-footer"><span><i class="hc-dot"></i>Sensor sonoro</span></div>
         </article>
         <article class="hover-card" style="--accent:var(--red);--glow:var(--red)">
-          <div class="hc-top"><div class="hc-icon">♨</div><span class="hc-index">02 / CLIMA</span></div>
+          <div class="hc-top"><div class="hc-icon">🌡️</div><span class="hc-index">02 / CLIMA</span></div>
           <h3>Conforto térmico</h3>
           <p>Visualize a temperatura da sala e consulte os registros para apoiar ajustes no ambiente.</p>
           <div class="mini-chart" aria-hidden="true"><i style="height:42%"></i><i style="height:52%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:71%"></i><i style="height:64%"></i><i style="height:55%"></i><i style="height:44%"></i><i style="height:51%"></i></div>
-          <div class="hc-line"></div><div class="hc-footer"><span><i class="hc-dot"></i>Sensor térmico</span><span>Ver detalhes ↗</span></div>
+          <div class="hc-line"></div><div class="hc-footer"><span><i class="hc-dot"></i>Sensor térmico</span></div>
         </article>
         <article class="hover-card" style="--accent:var(--mint);--glow:var(--mint)">
           <div class="hc-top"><div class="hc-icon">♡</div><span class="hc-index">03 / CUIDADO</span></div>
           <h3>Ação com propósito</h3>
           <p>Organize ocorrências e registre as ações do professor com atenção às necessidades individuais.</p>
           <div style="margin-top:21px;display:grid;gap:10px"><div style="height:7px;width:92%;border-radius:8px;background:var(--border)"><i style="display:block;width:72%;height:100%;border-radius:8px;background:var(--mint)"></i></div><div style="height:7px;width:75%;border-radius:8px;background:var(--border)"><i style="display:block;width:55%;height:100%;border-radius:8px;background:var(--mint);opacity:.7"></i></div><div style="height:7px;width:84%;border-radius:8px;background:var(--border)"><i style="display:block;width:86%;height:100%;border-radius:8px;background:var(--mint);opacity:.5"></i></div></div>
-          <div class="hc-line"></div><div class="hc-footer"><span><i class="hc-dot"></i>Registros de apoio</span><span>Ver detalhes ↗</span></div>
+          <div class="hc-line"></div><div class="hc-footer"><span><i class="hc-dot"></i>Registros de apoio</span></div>
         </article>
       </div>
       <div style="display:flex;justify-content:center;gap:6px;margin-top:0"><span style="height:4px;width:22px;border-radius:4px;background:var(--purple)"></span><span style="height:4px;width:6px;border-radius:4px;background:var(--border)"></span><span style="height:4px;width:6px;border-radius:4px;background:var(--border)"></span></div>
     </section>
   </div>
-  <footer class="landing-bottom"><span><strong>INOVAAPAE</strong> &nbsp;·&nbsp; Sala Inteligente</span><span>Um projeto de tecnologia a favor da inclusão.</span></footer>
+  <footer class="landing-bottom"><span><strong>INOVAAPAE</strong> &nbsp;·&nbsp; Sala Inteligente</span><span>Em conjunto com a APAE Atibaia</span></footer>
 </div>
 <div class="app">
 <aside class="sidebar">
-  <div class="brand"><div class="brand-mark">✳</div><div class="brand-copy"><strong>InovaApae</strong><span>Sala Inteligente</span></div></div>
-  <div class="nav-label">Workspace</div>
+  <div class="brand"><div class="brand-mark"><img src="logo-apae.png" alt="Logo da APAE" class="brand-logo"></div><div class="brand-copy"><span>Sala Inteligente</span></div></div>
   <nav id="nav">
     <a href="#visao-geral" data-page="visao-geral" class="active"><span class="ico">⌂</span><span class="nav-text">Visão geral</span></a>
-    <a href="#ruido" data-page="ruido"><span class="ico">〰</span><span class="nav-text">Monitoramento de ruído</span></a>
-    <a href="#temperatura" data-page="temperatura"><span class="ico">♨</span><span class="nav-text">Temperatura</span></a>
-    <a href="#como-funciona" data-page="como-funciona"><span class="ico">⌘</span><span class="nav-text">Como funciona</span></a>
+    <a href="#ruido" data-page="ruido"><span class="ico">🔊</span><span class="nav-text">Monitoramento de ruído</span></a>
+    <a href="#temperatura" data-page="temperatura"><span class="ico">🌡️</span><span class="nav-text">Temperatura</span></a>
+    <a href="#como-funciona" data-page="como-funciona"><span class="ico">📖</span><span class="nav-text">Como funciona</span></a>
     <a href="#orientacoes" data-page="orientacoes"><span class="ico">♡</span><span class="nav-text">Guia de acolhimento</span></a>
   </nav>
   <div class="sidebar-bottom"><div class="motto">Tecnologia a favor de um ambiente mais inclusivo.<br><span style="color:var(--purple2)">Feito para acolher.</span></div>
-  <div class="profile"><div class="avatar">P</div><div class="profile-copy"><strong>Área do professor</strong><span>Ambiente de aprendizagem</span></div></div></div>
+  <div class="profile"><div class="profile-copy"><strong>Área do professor</strong><span>Ambiente de aprendizagem</span></div></div></div>
 </aside>
 <main>
 <header class="topbar"><div><div class="eyebrow">InovaApae / Ambiente inteligente</div><h1 id="page-title">Visão geral</h1><p class="subtitle" id="page-subtitle">Informação clara para um ambiente mais acolhedor.</p></div>
-<div class="top-actions"><span class="date" id="sys-badge">◷ &nbsp; Última atualização: --:--:--</span><button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">☼ &nbsp; Tema claro</button></div></header>
+<div class="top-actions"><button class="ghost-btn header-home" onclick="returnToLanding()">← Tela inicial</button><span class="date" id="sys-badge">◷ &nbsp; Última atualização: --:--:--</span><button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">☼ &nbsp; Tema claro</button></div></header>
 <section class="page active" id="visao-geral">
   <div class="status-banner" id="banner-status"><div class="status-icon">⌛</div><div><strong>Conectando à API</strong><span>Aguardando leituras dos sensores.</span></div><div class="status-right"><span class="status-pill">Monitoramento</span></div></div>
   <div class="grid metrics">
-    <article class="card"><div class="metric-head"><span class="metric-label">Ruído atual</span><span class="metric-icon yellow-bg">〰</span></div><div class="metric-value"><span id="m-som">--</span> <small>dB</small></div><div class="metric-foot" id="f-m-som"><b>● Aguardando</b> · Limite: 80 dB</div></article>
-    <article class="card"><div class="metric-head"><span class="metric-label">Temperatura atual</span><span class="metric-icon red-bg">♨</span></div><div class="metric-value"><span id="m-temp">--</span> <small>°C</small></div><div class="metric-foot" id="f-m-temp"><b>● Aguardando</b> · Limite: 28 °C</div></article>
-    <article class="card"><div class="metric-head"><span class="metric-label">Ocorrências hoje</span><span class="metric-icon purple-bg">▤</span></div><div class="metric-value" id="m-ocorr">--</div><div class="metric-foot">Leituras acima do limite hoje</div></article>
+    <article class="card"><div class="metric-head"><span class="metric-label">Ruído atual</span><span class="metric-icon yellow-bg">🔊</span></div><div class="metric-value"><span id="m-som">--</span> <small>dB</small></div><div class="metric-foot" id="f-m-som"><b>● Aguardando</b> · Limite: 90 dB</div></article>
+    <article class="card"><div class="metric-head"><span class="metric-label">Temperatura atual</span><span class="metric-icon red-bg">🌡️</span></div><div class="metric-value"><span id="m-temp">--</span> <small>°C</small></div><div class="metric-foot" id="f-m-temp"><b>● Aguardando</b> · Limite: 28 °C</div></article>
+    <article class="card"><div class="metric-head"><span class="metric-label">Ocorrências hoje</span><span class="metric-icon purple-bg">▤</span></div><div class="metric-value" id="m-ocorr">--</div></article>
     <article class="card"><div class="metric-head"><span class="metric-label">Ações registradas</span><span class="metric-icon mint-bg">✓</span></div><div class="metric-value" id="m-acoes">--</div><div class="metric-foot">Acompanhamento do professor</div></article>
   </div>
   <div class="grid charts">
-    <article class="card"><div class="section-heading"><div><h2>Oscilação do ruído</h2><p>Variação ao longo do período · decibéis</p></div><span class="metric-icon yellow-bg">〰</span></div><div class="chart-wrap"><svg viewBox="0 0 480 205" role="img" aria-label="Gráfico de ruído"><g><line class="gridline" x1="44" y1="25" x2="465" y2="25"/><line class="gridline" x1="44" y1="62" x2="465" y2="62"/><line class="gridline" x1="44" y1="99" x2="465" y2="99"/><line class="gridline" x1="44" y1="136" x2="465" y2="136"/><line class="gridline" x1="44" y1="173" x2="465" y2="173"/></g><g class="axis" id="ax-cRuido"><text x="8" y="29">100</text><text x="16" y="66">75</text><text x="16" y="103">50</text><text x="16" y="140">25</text><text x="25" y="177">0</text></g><g id="plot-cRuido"></g></svg></div><div class="legend"><span><i style="background:var(--yellow)"></i>Nível registrado</span><span><i style="background:var(--yellow);border-top:1px dashed"></i>Limite configurado</span></div></article>
-    <article class="card"><div class="section-heading"><div><h2>Oscilação da temperatura</h2><p>Variação ao longo do período · Celsius</p></div><span class="metric-icon red-bg">♨</span></div><div class="chart-wrap"><svg viewBox="0 0 480 205" role="img" aria-label="Gráfico de temperatura"><g><line class="gridline" x1="44" y1="25" x2="465" y2="25"/><line class="gridline" x1="44" y1="62" x2="465" y2="62"/><line class="gridline" x1="44" y1="99" x2="465" y2="99"/><line class="gridline" x1="44" y1="136" x2="465" y2="136"/><line class="gridline" x1="44" y1="173" x2="465" y2="173"/></g><g class="axis" id="ax-cTemp"><text x="16" y="29">40°</text><text x="16" y="66">30°</text><text x="16" y="103">20°</text><text x="16" y="140">10°</text><text x="25" y="177">0°</text></g><g id="plot-cTemp"></g></svg></div><div class="legend"><span><i style="background:var(--red)"></i>Temperatura registrada</span><span><i style="background:var(--red)"></i>Limite configurado</span></div></article>
+    <article class="card"><div class="section-heading"><div><h2>Oscilação do ruído</h2><p>Variação ao longo do período · decibéis</p></div><span class="metric-icon yellow-bg">🔊</span></div><div class="chart-wrap"><svg viewBox="0 0 480 205" role="img" aria-label="Gráfico de ruído"><g><line class="gridline" x1="44" y1="25" x2="465" y2="25"/><line class="gridline" x1="44" y1="62" x2="465" y2="62"/><line class="gridline" x1="44" y1="99" x2="465" y2="99"/><line class="gridline" x1="44" y1="136" x2="465" y2="136"/><line class="gridline" x1="44" y1="173" x2="465" y2="173"/></g><g class="axis" id="ax-cRuido"><text x="8" y="29">100 dB</text><text x="16" y="66">75 dB</text><text x="16" y="103">50 dB</text><text x="16" y="140">25 dB</text><text x="25" y="177">0 dB</text></g><g id="plot-cRuido"></g></svg></div><div class="legend"><span><i style="background:var(--yellow)"></i>Nível registrado</span><span><i style="background:var(--yellow);border-top:1px dashed"></i>Limite configurado</span></div></article>
+    <article class="card"><div class="section-heading"><div><h2>Oscilação da temperatura</h2><p>Variação ao longo do período · Celsius</p></div><span class="metric-icon red-bg">🌡️</span></div><div class="chart-wrap"><svg viewBox="0 0 480 205" role="img" aria-label="Gráfico de temperatura"><g><line class="gridline" x1="44" y1="25" x2="465" y2="25"/><line class="gridline" x1="44" y1="62" x2="465" y2="62"/><line class="gridline" x1="44" y1="99" x2="465" y2="99"/><line class="gridline" x1="44" y1="136" x2="465" y2="136"/><line class="gridline" x1="44" y1="173" x2="465" y2="173"/></g><g class="axis" id="ax-cTemp"><text x="16" y="29">40 °C</text><text x="16" y="66">30 °C</text><text x="16" y="103">20 °C</text><text x="16" y="140">10 °C</text><text x="25" y="177">0 °C</text></g><g id="plot-cTemp"></g></svg></div><div class="legend"><span><i style="background:var(--red)"></i>Temperatura registrada</span><span><i style="background:var(--red)"></i>Limite configurado</span></div></article>
   </div>
   <article class="card table-card"><div class="table-top"><div class="section-heading" style="margin:0"><div><h2>Ocorrências recentes</h2><p>Registros vindos dos sensores em tempo real.</p></div></div>
   <!-- CORREÇÃO: seletor de professor no HTML (antes estava dentro do JS) -->
@@ -248,50 +263,47 @@ body.light .landing{background:radial-gradient(ellipse at 76% 26%,rgba(111,91,22
   </article>
 </section>
 <section class="page" id="ruido">
-  <div class="status-banner"><div class="status-icon" style="color:var(--yellow);background:#ffc8571c">〰</div><div><strong>Monitoramento de ruído</strong><span>Visualize as oscilações sonoras e consulte os registros relacionados.</span></div><div class="status-right"><span class="status-pill" id="pill-ruido">Monitoramento</span></div></div>
-  <div class="grid metrics" style="grid-template-columns:repeat(3,minmax(0,1fr))"><article class="card"><div class="metric-head"><span class="metric-label">Ruído atual</span><span class="metric-icon yellow-bg">〰</span></div><div class="metric-value"><span id="m-som-atual">--</span> <small>dB</small></div><div class="metric-foot" id="f-m-som-atual"><b>● Aguardando</b> · Limite: 80 dB</div></article><article class="card"><div class="metric-head"><span class="metric-label">Pico registrado</span><span class="metric-icon yellow-bg">↗</span></div><div class="metric-value"><span id="m-pico">--</span> <small>dB</small></div><div class="metric-foot">Maior leitura de hoje</div></article><article class="card"><div class="metric-head"><span class="metric-label">Ocorrências de ruído</span><span class="metric-icon purple-bg">▤</span></div><div class="metric-value" id="m-ocruido">--</div><div class="metric-foot">Leituras acima do limite hoje</div></article></div>
-  <article class="card" style="margin-bottom:18px"><div class="section-heading"><div><h2>Oscilação do ruído</h2><p>Leitura por horário · dB</p></div><span class="event-state">Limite: 80 dB</span></div><div class="chart-wrap" style="height:260px"><svg viewBox="0 0 800 260" role="img" aria-label="Gráfico detalhado de ruído"><g><line class="gridline" x1="55" y1="25" x2="780" y2="25"/><line class="gridline" x1="55" y1="70" x2="780" y2="70"/><line class="gridline" x1="55" y1="115" x2="780" y2="115"/><line class="gridline" x1="55" y1="160" x2="780" y2="160"/><line class="gridline" x1="55" y1="205" x2="780" y2="205"/></g><g class="axis" id="ax-cRuidoD"><text x="17" y="29">100</text><text x="25" y="74">75</text><text x="25" y="119">50</text><text x="25" y="164">25</text><text x="34" y="209">0</text></g><g id="plot-cRuidoD"></g></svg></div><div class="legend"><span><i style="background:var(--yellow)"></i>Nível de ruído</span><span><i style="background:var(--yellow)"></i>Limite configurado</span></div></article>
+  <div class="status-banner"><div class="status-icon" style="color:var(--yellow);background:#ffc8571c">🔊</div><div><strong>Monitoramento de ruído</strong><span>Visualize as oscilações sonoras e consulte os registros relacionados.</span></div><div class="status-right"><span class="status-pill" id="pill-ruido">Monitoramento</span></div></div>
+  <div class="grid metrics" style="grid-template-columns:repeat(3,minmax(0,1fr))"><article class="card"><div class="metric-head"><span class="metric-label">Ruído atual</span><span class="metric-icon yellow-bg">🔊</span></div><div class="metric-value"><span id="m-som-atual">--</span> <small>dB</small></div><div class="metric-foot" id="f-m-som-atual"><b>● Aguardando</b> · Limite: 90 dB</div></article><article class="card"><div class="metric-head"><span class="metric-label">Pico registrado</span><span class="metric-icon yellow-bg">↗</span></div><div class="metric-value"><span id="m-pico">--</span> <small>dB</small></div><div class="metric-foot">Maior leitura de hoje</div></article><article class="card"><div class="metric-head"><span class="metric-label">Ocorrências de ruído</span><span class="metric-icon purple-bg">▤</span></div><div class="metric-value" id="m-ocruido">--</div></article></div>
+  <article class="card" style="margin-bottom:18px"><div class="section-heading"><div><h2>Oscilação do ruído</h2><p>Leitura por horário · dB</p></div><span class="event-state">Limite: 90 dB</span></div><div class="chart-wrap" style="height:260px"><svg viewBox="0 0 800 260" role="img" aria-label="Gráfico detalhado de ruído"><g><line class="gridline" x1="55" y1="25" x2="780" y2="25"/><line class="gridline" x1="55" y1="70" x2="780" y2="70"/><line class="gridline" x1="55" y1="115" x2="780" y2="115"/><line class="gridline" x1="55" y1="160" x2="780" y2="160"/><line class="gridline" x1="55" y1="205" x2="780" y2="205"/></g><g class="axis" id="ax-cRuidoD"><text x="17" y="29">100 dB</text><text x="25" y="74">75 dB</text><text x="25" y="119">50 dB</text><text x="25" y="164">25 dB</text><text x="34" y="209">0 dB</text></g><g id="plot-cRuidoD"></g></svg></div><div class="legend"><span><i style="background:var(--yellow)"></i>Nível de ruído</span><span><i style="background:var(--yellow)"></i>Limite configurado</span></div></article>
   <div class="section-heading"><div><h2>Ocorrências de ruído</h2><p>Detalhes dos registros sonoros.</p></div><button class="ghost-btn" onclick="goTo('visao-geral')">← Voltar à visão geral</button></div>
   <article class="card table-card"><div class="table-scroll"><table><thead><tr><th>DATA E HORA</th><th>NÍVEL</th><th>POSSÍVEL FATOR</th><th>AÇÃO DO PROFESSOR</th><th>STATUS</th></tr></thead><tbody id="tb-ruido"></tbody></table></div></article>
 </section>
 <section class="page" id="temperatura">
-  <div class="status-banner"><div class="status-icon" style="color:var(--red);background:#ff657a1c">♨</div><div><strong>Monitoramento de temperatura</strong><span>Acompanhe as variações térmicas e os registros relacionados.</span></div><div class="status-right"><span class="status-pill" id="pill-temp">Monitoramento</span></div></div>
-  <div class="grid metrics" style="grid-template-columns:repeat(3,minmax(0,1fr))"><article class="card"><div class="metric-head"><span class="metric-label">Temperatura atual</span><span class="metric-icon red-bg">♨</span></div><div class="metric-value"><span id="m-temp-atual">--</span> <small>°C</small></div><div class="metric-foot" id="f-m-temp-atual"><b>● Aguardando</b> · Limite: 28 °C</div></article><article class="card"><div class="metric-head"><span class="metric-label">Maior leitura</span><span class="metric-icon red-bg">↗</span></div><div class="metric-value"><span id="m-maior">--</span> <small>°C</small></div><div class="metric-foot">Maior leitura de hoje</div></article><article class="card"><div class="metric-head"><span class="metric-label">Ocorrências térmicas</span><span class="metric-icon purple-bg">▤</span></div><div class="metric-value" id="m-otemp">--</div><div class="metric-foot">Leituras acima do limite hoje</div></article></div>
-  <article class="card" style="margin-bottom:18px"><div class="section-heading"><div><h2>Oscilação da temperatura</h2><p>Leitura por horário · °C</p></div><span class="event-state">Limite: 28 °C</span></div><div class="chart-wrap" style="height:260px"><svg viewBox="0 0 800 260" role="img" aria-label="Gráfico detalhado de temperatura"><g><line class="gridline" x1="55" y1="25" x2="780" y2="25"/><line class="gridline" x1="55" y1="70" x2="780" y2="70"/><line class="gridline" x1="55" y1="115" x2="780" y2="115"/><line class="gridline" x1="55" y1="160" x2="780" y2="160"/><line class="gridline" x1="55" y1="205" x2="780" y2="205"/></g><g class="axis" id="ax-cTempD"><text x="17" y="29">40°</text><text x="17" y="74">30°</text><text x="17" y="119">20°</text><text x="17" y="164">10°</text><text x="25" y="209">0°</text></g><g id="plot-cTempD"></g></svg></div><div class="legend"><span><i style="background:var(--red)"></i>Temperatura registrada</span><span><i style="background:var(--red)"></i>Limite configurado</span></div></article>
+  <div class="status-banner"><div class="status-icon" style="color:var(--red);background:#ff657a1c">🌡️</div><div><strong>Monitoramento de temperatura</strong><span>Acompanhe as variações térmicas e os registros relacionados.</span></div><div class="status-right"><span class="status-pill" id="pill-temp">Monitoramento</span></div></div>
+  <div class="grid metrics" style="grid-template-columns:repeat(3,minmax(0,1fr))"><article class="card"><div class="metric-head"><span class="metric-label">Temperatura atual</span><span class="metric-icon red-bg">🌡️</span></div><div class="metric-value"><span id="m-temp-atual">--</span> <small>°C</small></div><div class="metric-foot" id="f-m-temp-atual"><b>● Aguardando</b> · Limite: 28 °C</div></article><article class="card"><div class="metric-head"><span class="metric-label">Maior leitura</span><span class="metric-icon red-bg">↗</span></div><div class="metric-value"><span id="m-maior">--</span> <small>°C</small></div><div class="metric-foot">Maior leitura de hoje</div></article><article class="card"><div class="metric-head"><span class="metric-label">Ocorrências térmicas</span><span class="metric-icon purple-bg">▤</span></div><div class="metric-value" id="m-otemp">--</div><div class="metric-foot">Leituras acima do limite hoje</div></article></div>
+  <article class="card" style="margin-bottom:18px"><div class="section-heading"><div><h2>Oscilação da temperatura</h2><p>Leitura por horário · °C</p></div><span class="event-state">Limite: 28 °C</span></div><div class="chart-wrap" style="height:260px"><svg viewBox="0 0 800 260" role="img" aria-label="Gráfico detalhado de temperatura"><g><line class="gridline" x1="55" y1="25" x2="780" y2="25"/><line class="gridline" x1="55" y1="70" x2="780" y2="70"/><line class="gridline" x1="55" y1="115" x2="780" y2="115"/><line class="gridline" x1="55" y1="160" x2="780" y2="160"/><line class="gridline" x1="55" y1="205" x2="780" y2="205"/></g><g class="axis" id="ax-cTempD"><text x="17" y="29">40 °C</text><text x="17" y="74">30 °C</text><text x="17" y="119">20 °C</text><text x="17" y="164">10 °C</text><text x="25" y="209">0 °C</text></g><g id="plot-cTempD"></g></svg></div><div class="legend"><span><i style="background:var(--red)"></i>Temperatura registrada</span><span><i style="background:var(--red)"></i>Limite configurado</span></div></article>
   <div class="section-heading"><div><h2>Ocorrências de temperatura</h2><p>Detalhes dos registros térmicos.</p></div><button class="ghost-btn" onclick="goTo('visao-geral')">← Voltar à visão geral</button></div>
   <article class="card table-card"><div class="table-scroll"><table><thead><tr><th>DATA E HORA</th><th>NÍVEL</th><th>POSSÍVEL FATOR</th><th>AÇÃO DO PROFESSOR</th><th>STATUS</th></tr></thead><tbody id="tb-temp"></tbody></table></div></article>
 </section>
 <section class="page" id="como-funciona">
-  <div class="status-banner"><div class="status-icon">✳</div><div><strong>Tecnologia que ajuda a acolher</strong><span>Uma visão simples de como os sensores apoiam a rotina escolar.</span></div></div>
   <article class="card"><div class="section-heading"><div><h2>Como funciona a Sala Inteligente</h2><p>Do monitoramento à ação cuidadosa do professor.</p></div><span class="event-state">Fluxo do sistema</span></div>
   <div class="steps">
     <div class="step"><div class="step-number">01</div><div class="step-emoji">🏫</div><strong>O ambiente</strong><p>A sala está em atividade, com diferentes sons e condições térmicas.</p></div>
-    <div class="step"><div class="step-number">02</div><div class="step-emoji">〰　♨</div><strong>Os sensores medem</strong><p>O sistema acompanha o ruído e a temperatura do ambiente.</p></div>
+    <div class="step"><div class="step-number">02</div><div class="step-emoji">🔊　🌡️</div><strong>Os sensores medem</strong><p>O sistema acompanha o ruído e a temperatura do ambiente.</p></div>
     <div class="step"><div class="step-number">03</div><div class="step-emoji">💡</div><strong>O Arduino sinaliza</strong><p>Os LEDs indicam quando uma medição ultrapassa os limites configurados.</p></div>
     <div class="step"><div class="step-number">04</div><div class="step-emoji">🧑‍🏫</div><strong>O professor observa</strong><p>O painel ajuda a consultar os dados e registrar as ações realizadas.</p></div>
     <div class="step"><div class="step-number">05</div><div class="step-emoji">🌱</div><strong>O ambiente é ajustado</strong><p>A equipe avalia medidas possíveis para favorecer conforto e bem-estar.</p></div>
   </div></article>
-  <div class="grid info-grid" style="margin-top:16px"><article class="card"><div class="metric-icon yellow-bg">〰</div><h2 style="font-size:14px;margin:14px 0 7px">Sensor de ruído</h2><p class="subtitle">Registra o nível sonoro. O LED amarelo representa o alerta de ruído no projeto.</p></article><article class="card"><div class="metric-icon red-bg">♨</div><h2 style="font-size:14px;margin:14px 0 7px">Sensor de temperatura</h2><p class="subtitle">Acompanha a temperatura. O LED vermelho representa o alerta térmico no projeto.</p></article><article class="card"><div class="metric-icon purple-bg">▤</div><h2 style="font-size:14px;margin:14px 0 7px">Painel de acompanhamento</h2><p class="subtitle">Organiza leituras e ocorrências para facilitar a observação e o registro pelo professor.</p></article></div>
+  <div class="grid info-grid" style="margin-top:16px"><article class="card"><div class="metric-icon yellow-bg">🔊</div><h2 style="font-size:14px;margin:14px 0 7px">Sensor de ruído</h2><p class="subtitle">Registra o nível sonoro. O LED amarelo representa o alerta de ruído no projeto.</p></article><article class="card"><div class="metric-icon red-bg">🌡️</div><h2 style="font-size:14px;margin:14px 0 7px">Sensor de temperatura</h2><p class="subtitle">Acompanha a temperatura. O LED vermelho representa o alerta térmico no projeto.</p></article><article class="card"><div class="metric-icon purple-bg">▤</div><h2 style="font-size:14px;margin:14px 0 7px">Painel de acompanhamento</h2><p class="subtitle">Organiza leituras e ocorrências para facilitar a observação e o registro pelo professor.</p></article></div>
   <div class="notice">Os limites devem ser definidos e validados de acordo com os sensores, o ambiente e a orientação da equipe responsável. O painel é uma ferramenta de apoio, não um diagnóstico nem um substituto da observação individual.</div>
 </section>
 <section class="page" id="orientacoes">
-  <div class="status-banner"><div class="status-icon">♡</div><div><strong>Guia de acolhimento</strong><span>Orientações gerais para apoiar uma resposta respeitosa e individualizada.</span></div></div>
   <div class="grid page-grid">
     <article class="card"><div class="section-heading"><div><h2>Possíveis fatores de desconforto</h2><p>Os sinais e as necessidades variam de pessoa para pessoa.</p></div></div>
       <div class="guide-list">
-        <div class="guide-item"><div class="guide-symbol">〰</div><div><strong>Ruídos intensos ou inesperados</strong><p>Várias conversas ao mesmo tempo, arrastar de móveis ou sons repentinos podem incomodar alguns alunos.</p></div></div>
-        <div class="guide-item"><div class="guide-symbol">♨</div><div><strong>Desconforto térmico</strong><p>Calor, frio ou ventilação inadequada podem afetar o conforto e a participação.</p></div></div>
+        <div class="guide-item"><div class="guide-symbol">🔊</div><div><strong>Ruídos intensos ou inesperados</strong><p>Várias conversas ao mesmo tempo, arrastar de móveis ou sons repentinos podem incomodar alguns alunos.</p></div></div>
+        <div class="guide-item"><div class="guide-symbol">🌡️</div><div><strong>Desconforto térmico</strong><p>Calor, frio ou ventilação inadequada podem afetar o conforto e a participação.</p></div></div>
         <div class="guide-item"><div class="guide-symbol">◈</div><div><strong>Mudanças e transições</strong><p>Alterações inesperadas na rotina ou nas atividades podem exigir apoio e antecipação.</p></div></div>
         <div class="guide-item"><div class="guide-symbol">◎</div><div><strong>Sobrecarga sensorial</strong><p>A combinação de estímulos, cansaço e outras circunstâncias pode aumentar o desconforto.</p></div></div>
       </div>
     </article>
     <article class="card"><div class="section-heading"><div><h2>Como agir com acolhimento</h2><p>Priorize segurança, respeito e necessidades individuais.</p></div></div>
       <div class="guide-list">
-        <div class="guide-item"><div class="guide-symbol" style="color:var(--mint)">01</div><div><strong>Mantenha a calma</strong><p>Fale de forma tranquila, com frases claras e tom respeitoso.</p></div></div>
-        <div class="guide-item"><div class="guide-symbol" style="color:var(--mint)">02</div><div><strong>Reduza estímulos quando possível</strong><p>Se for adequado, diminua o ruído e ajuste o ambiente sem criar mais pressão.</p></div></div>
-        <div class="guide-item"><div class="guide-symbol" style="color:var(--mint)">03</div><div><strong>Respeite a comunicação</strong><p>Ofereça tempo e opções de comunicação que funcionem para aquele aluno.</p></div></div>
-        <div class="guide-item"><div class="guide-symbol" style="color:var(--mint)">04</div><div><strong>Siga o plano individual</strong><p>Use as estratégias acordadas com o aluno, a família e a equipe responsável.</p></div></div>
-        <div class="guide-item"><div class="guide-symbol" style="color:var(--mint)">05</div><div><strong>Registre sem julgar</strong><p>Anote observações objetivas e a ação tomada, preservando a privacidade.</p></div></div>
+        <div class="guide-item"><div class="guide-symbol guide-number"><span>01</span><span aria-label="Ruído">🔊</span></div><div><strong>Tente realizar alguma dinâmica para acalmar a agitação da sala.</strong></div></div>
+        <div class="guide-item"><div class="guide-symbol guide-number"><span>02</span><span aria-label="Ruído">🔊</span></div><div><strong>Tente levar a turma para outro ambiente dentro da instituição.</strong></div></div>
+        <div class="guide-item"><div class="guide-symbol guide-number"><span>03</span><span aria-label="Temperatura">🌡️</span></div><div><strong>Ligue o ventilador.</strong></div></div>
+        <div class="guide-item"><div class="guide-symbol guide-number"><span>04</span><span aria-label="Temperatura">🌡️</span></div><div><strong>Abra as janelas.</strong></div></div>
       </div>
     </article>
   </div>
@@ -309,7 +321,7 @@ const CONFIG={
   EP_LEITURAS:"/leituras",
   EP_FEEDBACK:"/feedbacks",        // se der 404, troque para "/feedback"
   EP_PROFESSORES:"/professores",   // se der 404, troque para "/professor"
-  LIMITE_SOM:80,
+  LIMITE_SOM:90,
   LIMITE_TEMP:28,
   REFRESH_MS:30000
 };
@@ -332,7 +344,7 @@ function goTo(id){
  window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();goTo(a.dataset.page)}));
-document.body.classList.add('landing-mode');
+document.body.classList.add('landing-mode', 'light');
 function enterDashboard(){
  document.body.classList.remove('landing-mode');
  const hash=location.hash.replace('#','');
@@ -343,12 +355,28 @@ function enterDashboard(){
 function landingScrollToFeatures(){
  document.getElementById('landingFeatures').scrollIntoView({behavior:'smooth',block:'center'});
 }
+function returnToLanding(){
+ document.body.classList.add('landing-mode');
+ history.replaceState(null,'',location.pathname);
+ window.scrollTo({top:0,behavior:'smooth'});
+}
 function toggleTheme(){
  document.body.classList.toggle('light');
  const light=document.body.classList.contains('light');
  const label=light?'☾ &nbsp; Tema escuro':'☼ &nbsp; Tema claro';
  document.querySelectorAll('.theme-toggle').forEach(btn=>btn.innerHTML=label);
 }
+
+function atualizarBotoesTema() {
+  const light = document.body.classList.contains('light');
+  const label = light ? '☾ &nbsp; Tema escuro' : '☼ &nbsp; Tema claro';
+
+  document.querySelectorAll('.theme-toggle').forEach(btn => {
+    btn.innerHTML = label;
+  });
+}
+
+atualizarBotoesTema();
 document.getElementById('themeToggle').addEventListener('click',toggleTheme);
 document.getElementById('landingThemeToggle').addEventListener('click',toggleTheme);
 /* ---------- Helpers de dados ---------- */
@@ -373,15 +401,49 @@ function dataDe(l){
 }
 /* CORREÇÃO: alerta usa o LED que o BACKEND decidiu (tb02_led_*); fallback pelo limite */
 function alertaSom(l){
+ const v=som(l);
+ if(v!==null)return v>CONFIG.LIMITE_SOM;
  const led=campo(l,['tb02_led_som']);
- if(led!==null&&Number(led)===1)return true;
- const v=som(l);return v!==null&&v>CONFIG.LIMITE_SOM;
+ return led!==null&&Number(led)===1;
 }
 function alertaTemp(l){
  const led=campo(l,['tb02_led_temperatura']);
  if(led!==null&&Number(led)===1)return true;
  const v=temp(l);return v!==null&&v>CONFIG.LIMITE_TEMP;
 }
+function idsInicioEpisodioTemp(arr) {
+  const cronologicas = [...arr].sort(
+    (a, b) => (dataDe(a)?.getTime() || 0) - (dataDe(b)?.getTime() || 0)
+  );
+
+  const ids = new Set();
+  let temperaturaAlta = false;
+
+  for (const leitura of cronologicas) {
+    const temperatura = temp(leitura);
+
+    if (temperatura === null) continue;
+
+    if (temperatura > CONFIG.LIMITE_TEMP) {
+      if (!temperaturaAlta) {
+        ids.add(String(idDe(leitura)));
+      }
+      temperaturaAlta = true;
+    } else {
+      temperaturaAlta = false;
+    }
+  }
+
+  return ids;
+}
+
+function ehInicioEpisodioTemp(leitura, idsTemp) {
+  return idsTemp.has(String(idDe(leitura)));
+}
+
+
+
+
 function ehHoje(d){if(!d)return false;const h=new Date();return d.getDate()===h.getDate()&&d.getMonth()===h.getMonth()&&d.getFullYear()===h.getFullYear();}
 function fmtHora(d){return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
 function fmtDia(d){return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();}
@@ -503,25 +565,50 @@ function fill(id,html,colspan){
  const e=$(id);if(!e)return;
  e.innerHTML=html||'<tr><td colspan="'+colspan+'" class="muted" style="text-align:center;padding:22px">Nenhuma ocorrência registrada ainda.</td></tr>';
 }
+function helpTip(text){return '<span class="help-tip"><span class="help-tip-button" tabindex="0" aria-label="Mais informações">?</span><span class="help-tip-content">'+esc(text)+'</span></span>';}
+function statusHelpMarkup(active){
+ if(active)return '<span class="status-pill">Monitoramento ativo</span>';
+ return '<span class="status-help"><span class="status-pill alerta">Certifique-se que o dispositivo esteja ligado</span>'+helpTip('Espere um tempo de 50 segundos para carregar as informações no sistema, caso não funcione, certifique-se que a internet esteja funcionando ou acione o suporte.')+'</span>';
+}
+function hardwareOk(){
+ const latest=leituras.length?dataDe(leituras[0]):null;
+ return apiOk && !!latest && (Date.now()-latest.getTime())<=50000 && (Date.now()-latest.getTime())>=-5000;
+}
 /* ---------- Render geral ---------- */
 function render(){
- const l=leituras[0];
- const hoje=leituras.filter(x=>ehHoje(dataDe(x)));
- const ocorr=leituras.filter(x=>alertaSom(x)||alertaTemp(x));
- const ocorrHoje=hoje.filter(x=>alertaSom(x)||alertaTemp(x));
- /* CORREÇÃO: "Ações registradas" conta ocorrências com feedback REAL no banco */
- const acoesHoje=hoje.filter(x=>feedbacks[Number(idDe(x))]);
- const pico=maxDe(hoje,som), maior=maxDe(hoje,temp);
- const ocrHoje=hoje.filter(alertaSom).length, otHoje=hoje.filter(alertaTemp).length;
+
+const l = leituras[0];
+const idsTemp = idsInicioEpisodioTemp(leituras);
+
+const hoje = leituras.filter(x => ehHoje(dataDe(x)));
+
+const ocorr = leituras.filter(
+  x => alertaSom(x) || ehInicioEpisodioTemp(x, idsTemp)
+);
+
+const ocorrHoje = hoje.filter(
+  x => alertaSom(x) || ehInicioEpisodioTemp(x, idsTemp)
+);
+
+/* CORREÇÃO: ações registradas contam ocorrências com feedback REAL no banco */
+const acoesHoje = hoje.filter(x => feedbacks[Number(idDe(x))]);
+
+const pico = maxDe(hoje, som);
+const maior = maxDe(hoje, temp);
+
+const ocrHoje = hoje.filter(alertaSom).length;
+const otHoje = hoje.filter(
+  x => ehInicioEpisodioTemp(x, idsTemp)
+).length;
  /* métricas */
  setTxt('m-som',l?som(l):null);
  setTxt('m-temp',l?temp(l):null);
  setTxt('m-ocorr',ocorrHoje.length||0);
  setTxt('m-acoes',acoesHoje.length||0);
  const fs=$('f-m-som');
- if(fs)fs.innerHTML=l?(alertaSom(l)?'<b class="alerta">● Atenção</b> · Ultrapassou o limite':'<b>● Normal</b> · Limite: 80 dB'):'<b>● Aguardando</b> · Limite: 80 dB';
+ if(fs)fs.innerHTML=(l?(alertaSom(l)?'<b class="alerta">● Atenção</b> · Ultrapassou o limite':'<b>● Normal</b> · Limite: 90 dB'):'<b>● Aguardando</b> · Limite: 90 dB')+' '+helpTip('O limite de quem é hipersensível aos ruídos é de 90 decibéis. (Fonte: PROJETO DE LEI N° 2449, DE 2022 - Senado Federal).');
  const ft=$('f-m-temp');
- if(ft)ft.innerHTML=l?(alertaTemp(l)?'<b class="alerta">● Atenção</b> · Ultrapassou o limite':'<b>● Normal</b> · Limite: 28 °C'):'<b>● Aguardando</b> · Limite: 28 °C';
+ if(ft)ft.innerHTML=(l?(alertaTemp(l)?'<b class="alerta">● Atenção</b> · Ultrapassou o limite':'<b>● Normal</b> · Limite: 28 °C'):'<b>● Aguardando</b> · Limite: 28 °C')+' '+helpTip('Muitos indivíduos com diagnóstico de autismo relatam sentir mais calor do que outras pessoas ou apresentam maior dificuldade em lidar com temperaturas elevadas, seja elas a partir dos 28ºC. (Fonte: Instituto Celebra)');
  setTxt('m-som-atual',l?som(l):null);
  setTxt('m-temp-atual',l?temp(l):null);
  setTxt('m-pico',pico);
@@ -534,28 +621,36 @@ function render(){
  if(fta)fta.innerHTML=l?(alertaTemp(l)?'<b class="alerta">● Atenção</b>':'<b>● Normal</b>'):'<b>● Aguardando</b>';
  /* pills das abas de detalhe */
  const pr=$('pill-ruido'),pt=$('pill-temp');
- if(pr)pr.textContent=apiOk?'Monitoramento ativo':'Sem resposta da API';
- if(pt)pt.textContent=apiOk?'Monitoramento ativo':'Sem resposta da API';
+ if(pr)pr.innerHTML=statusHelpMarkup(hardwareOk());
+ if(pt)pt.innerHTML=statusHelpMarkup(hardwareOk());
  /* banner de status da sala */
  const b=$('banner-status');
  if(b){
   if(!l){
    b.className='status-banner';
-   b.innerHTML='<div class="status-icon">⌛</div><div><strong>Sem dados</strong><span>Aguardando leituras dos sensores.</span></div><div class="status-right"><span class="status-pill">Conectando à API</span></div>';
+   b.innerHTML='<div class="status-icon">⌛</div><div><strong>Sem dados recentes</strong><span>Aguardando leituras dos sensores.</span></div><div class="status-right">'+statusHelpMarkup(false)+'</div>';
   }else if(alertaSom(l)||alertaTemp(l)){
    b.className='status-banner atencao';
    const msg=alertaSom(l)&&alertaTemp(l)?'Ambos os indicadores acima dos limites.':(alertaSom(l)?'Ruído acima do limite configurado.':'Temperatura acima do limite configurado.');
-   b.innerHTML='<div class="status-icon" style="color:var(--red);background:#ff657a1c">⚠</div><div><strong>Sala em atenção</strong><span>'+msg+'</span></div><div class="status-right"><span class="status-pill alerta">Monitoramento ativo</span></div>';
+   b.innerHTML='<div class="status-icon" style="color:var(--red);background:#ff657a1c">⚠</div><div><strong>Sala em atenção</strong><span>'+msg+'</span></div><div class="status-right">'+statusHelpMarkup(hardwareOk())+'</div>';
   }else{
    b.className='status-banner';
-   b.innerHTML='<div class="status-icon">✓</div><div><strong>Sala em estado normal</strong><span>Os indicadores estão dentro dos limites configurados.</span></div><div class="status-right"><span class="status-pill">Monitoramento ativo</span></div>';
+   b.innerHTML='<div class="status-icon">✓</div><div><strong>Sala em estado normal</strong><span>Os indicadores estão dentro dos limites configurados.</span></div><div class="status-right">'+statusHelpMarkup(hardwareOk())+'</div>';
   }
  }
  /* tabelas de ocorrências */
  fill('tb-ocorr',ocorr.slice(0,12).map(x=>linhaOcorr(x,true,true)).join(''),6);
  fill('tb-ruido',ocorr.filter(alertaSom).slice(0,12).map(x=>linhaOcorr(x,false,false)).join(''),5);
- fill('tb-temp',ocorr.filter(alertaTemp).slice(0,12).map(x=>linhaOcorr(x,false,false)).join(''),5);
- const c=$('tb-count');
+fill(
+  'tb-temp',
+  leituras
+    .filter(x => ehInicioEpisodioTemp(x, idsTemp))
+    .sort((a, b) => (dataDe(b)?.getTime() || 0) - (dataDe(a)?.getTime() || 0))
+    .slice(0, 12)
+    .map(x => linhaOcorr(x, false, false))
+    .join(''),
+  5
+); const c=$('tb-count');
  if(c)c.textContent=fmtDia(new Date())+' — '+String(ocorr.length).padStart(2,'0')+' ocorrências';
  /* gráficos: últimas 13 leituras em ordem cronológica */
  const serie=leituras.slice(0,13).reverse();
@@ -596,12 +691,13 @@ function enableEditing(){
  }
  btn.innerHTML='⏳ &nbsp; Salvando...';
  btn.disabled=true;
- const idProf=Number(($('sel-professor')||{}).value)||1; // professor selecionado
+ const idProf=Number(($('sel-professor')||{}).value);
+ if(!idProf){alert('Selecione um professor cadastrado antes de salvar.');btn.innerHTML='✓ &nbsp; Salvar registros';btn.disabled=false;return;}
  Promise.all(trocas.map(t=>{
   const fb=feedbacks[t.id];
   /* formato EXATO que o feedbackRoutes.js espera (tb03_*) */
   const corpo=fb
-   ? {tb03_comentario:t.acao,tb03_causa:t.fator}                                            // já existe → PUT
+   ? {tb03_comentario:t.acao,tb03_causa:t.fator,tb03_id_professor:idProf}                  // já existe → PUT
    : {tb03_comentario:t.acao,tb03_causa:t.fator,tb03_id_professor:idProf,tb03_id_leitura:t.id}; // novo → POST
   const url=fb
    ? CONFIG.API_BASE+CONFIG.EP_FEEDBACK+'/'+fb.id
