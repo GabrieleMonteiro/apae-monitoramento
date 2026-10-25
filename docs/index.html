@@ -265,6 +265,43 @@ body.light .landing{background:radial-gradient(ellipse at 76% 26%,rgba(111,91,22
 
 
 
+
+/* Menu retrátil e ajustes reais para celular */
+.mobile-menu-toggle,.mobile-menu-backdrop{display:none}
+@media(max-width:800px){
+  .mobile-menu-toggle{
+    display:grid;place-items:center;position:fixed;top:12px;left:12px;z-index:30;
+    width:44px;height:44px;border:1px solid var(--border);border-radius:13px;
+    background:var(--surface);color:var(--text);font-size:23px;box-shadow:var(--shadow);cursor:pointer
+  }
+  .mobile-menu-backdrop{position:fixed;inset:0;background:rgba(7,8,20,.48);z-index:19;opacity:0;pointer-events:none;transition:opacity .22s}
+  .sidebar{width:min(280px,84vw);padding:24px 16px;transform:translateX(-105%);transition:transform .25s ease;z-index:20;box-shadow:var(--shadow);overflow-y:auto}
+  .sidebar.mobile-open{transform:translateX(0)}
+  body.mobile-menu-open .mobile-menu-backdrop{display:block;opacity:1;pointer-events:auto}
+  .brand{padding-bottom:26px}.brand-copy,.nav-label,.nav-text,.motto,.profile-copy{display:initial}
+  .brand-copy span{display:block}.nav-label{display:block}nav a{justify-content:flex-start;padding:12px 13px}nav a .ico{font-size:19px;flex:0 0 20px}
+  .profile{justify-content:flex-start;padding-top:15px}.sidebar-bottom{padding:18px 10px 0}
+  .app main{margin-left:0;width:100%;max-width:none;padding:72px 16px 32px}
+  .topbar{align-items:flex-start;flex-direction:column;gap:14px;margin-bottom:20px}
+  .top-actions{width:100%;justify-content:flex-start;flex-wrap:wrap;gap:8px}
+  .charts,.page-grid,.split{grid-template-columns:minmax(0,1fr)}
+  .card,.grid,.page{min-width:0;max-width:100%}.chart-wrap{width:100%;max-width:100%;overflow:hidden}.chart-wrap svg{display:block;width:100%;height:auto}
+  .table-card{min-width:0;overflow:hidden}.table-scroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .table-scroll table{min-width:520px}
+  .section-heading{align-items:flex-start;flex-wrap:wrap}
+  .table-top{align-items:flex-start;flex-direction:column;gap:12px}
+}
+@media(max-width:480px){
+  .app main{padding:68px 12px 28px}
+  .metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .metric-value{font-size:clamp(20px,6vw,26px);overflow-wrap:anywhere}
+  .card{padding:14px;border-radius:20px}
+  .status-banner{align-items:flex-start;padding:14px;gap:10px}
+  h1{font-size:25px}.top-actions button{font-size:12px;padding:10px 12px}
+  .legend{flex-wrap:wrap;gap:8px 14px}
+}
+@media(min-width:801px){.mobile-menu-toggle,.mobile-menu-backdrop{display:none!important}}
+
 </style>
 </head>
 <body>
@@ -320,7 +357,9 @@ body.light .landing{background:radial-gradient(ellipse at 76% 26%,rgba(111,91,22
   <footer class="landing-bottom"><span><strong>INOVAAPAE</strong> &nbsp;·&nbsp; Sala Inteligente</span><span>Em conjunto com a APAE Atibaia</span></footer>
 </div>
 <div class="app">
-<aside class="sidebar">
+<button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
+<div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
+<aside class="sidebar" id="appSidebar">
   <div class="brand"><div class="brand-mark"><img src="logo-apae.png" alt="Logo da APAE" class="brand-logo"></div><div class="brand-copy"><span>Sala Inteligente</span></div></div>
   <nav id="nav">
     <a href="#visao-geral" data-page="visao-geral" class="active"><span class="ico">⌂</span><span class="nav-text">Visão geral</span></a>
@@ -841,5 +880,21 @@ carregarProfessores();   // popula o seletor de professor uma vez
 carregar();
 setInterval(carregar,CONFIG.REFRESH_MS);
 </script>
+
+// Menu lateral retrátil em telas pequenas
+(function setupMobileMenu(){
+ const toggle=document.getElementById('mobileMenuToggle');
+ const sidebar=document.getElementById('appSidebar');
+ const backdrop=document.getElementById('mobileMenuBackdrop');
+ if(!toggle||!sidebar||!backdrop)return;
+ function closeMenu(){sidebar.classList.remove('mobile-open');document.body.classList.remove('mobile-menu-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Abrir menu');toggle.textContent='☰';}
+ function openMenu(){sidebar.classList.add('mobile-open');document.body.classList.add('mobile-menu-open');toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Fechar menu');toggle.textContent='✕';}
+ toggle.addEventListener('click',()=>sidebar.classList.contains('mobile-open')?closeMenu():openMenu());
+ backdrop.addEventListener('click',closeMenu);
+ sidebar.querySelectorAll('nav a').forEach(link=>link.addEventListener('click',closeMenu));
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
+ window.addEventListener('resize',()=>{if(window.innerWidth>800)closeMenu();});
+})();
+
 </body>
 </html>
